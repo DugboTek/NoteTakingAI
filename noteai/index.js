@@ -11,6 +11,7 @@ const port = 3001;
 
 
 //TODO: add Whisper API integration
+//whisper
 
 const configuration = new Configuration({
     organization: "org-z6irWsTc2C2dIvnVg5TEG2gE",
