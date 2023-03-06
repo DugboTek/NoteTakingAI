@@ -4,11 +4,13 @@ import React, { useState } from 'react'
 import './App.css'
 import TextWriter from './components/TextWriter.js';
 
-function App() {
 
-  const NEXT_PUBLIC_OPENAI_API_KEY="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"
+function App() {
   const [message, setMessage] = useState('')
   const [response, setResponse] = useState('')
+
+  const [hasFile, setHasFile] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -21,9 +23,10 @@ function App() {
     })
     .then(res => res.json())
     .then((data) => setResponse(data.message));
+    console.log("submitted");
   };
 
-const [formData, setFormData] = useState<FormData | null>(null);
+const [formData, setFormData] = useState(null);
 // write a handleFile function that takes in a file and sets the formData state to a new FormData object with the file appended to it
 
 const handleFile = async(e) =>{
@@ -33,10 +36,15 @@ const handleFile = async(e) =>{
     const data = new FormData();
     data.append("file", file);
     data.append("model", "whisper-1");
-    data.append("language", "en");
     setFormData(data);
+    console.log("File Uploaded");
+
+    setHasFile(true); // set the flag to true
     if (file.size > 25 * 1024 * 1024) {
       alert("Please upload an audio file less than 25MB");
+      console.log("Please upload an audio file less than 25MB");
+
+      setHasFile(false); // reset the flag if the file is too big
       return;
     }
   }
@@ -45,19 +53,21 @@ const handleFile = async(e) =>{
 const [convertedText, setConvertedText] = useState("");
 const [loading, setLoading] = useState(false);
 
+
+
 const sendAudio = async () => {
   setLoading(true);
   const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY ?? ""}`,
+      "Authorization": `Bearer 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`,
     },
     method: "POST",
     body: formData,
   });
-
+  console.log("audio sent");
   const data = await res.json();
   setLoading(false);
-
+  console.log(data);
   setConvertedText(data.text);
 };
 
@@ -85,6 +95,7 @@ const sendAudio = async () => {
       <input
             type="file"
             accept="audio/*"
+            onChange={handleFile}
       />
       <button onClick={sendAudio}>Send Audio</button>
       <form onSubmit={handleSubmit}>
