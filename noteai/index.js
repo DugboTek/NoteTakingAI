@@ -9,6 +9,9 @@ const cors = require('cors');
 const app = express();
 const port = 3001;
 
+
+//TODO: add Whisper API integration
+
 const configuration = new Configuration({
     organization: "org-z6irWsTc2C2dIvnVg5TEG2gE",
    // apiKey: "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",
