@@ -33,7 +33,7 @@ app.post('/', async (req, res) => {
 	const response = await openai.createChatCompletion({
 		model: "gpt-3.5-turbo",
 		messages: [{role: "user", content: `${message}`}],
-		max_tokens: 20,
+		max_tokens: 2500,
 		temperature: 0,
 	});
 

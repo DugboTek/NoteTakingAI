@@ -67,7 +67,7 @@ const sendAudio = async () => {
   console.log("audio sent");
   const data = await res.json();
   setLoading(false);
-  console.log(data);
+  console.log(data.text);
   setConvertedText(data.text);
 };
 
@@ -103,7 +103,10 @@ const sendAudio = async () => {
         <button type="submit">Submit</button>
       </form>
       <div>{response}</div>
-      <TextWriter text={convertedText} delay={10} />
+      <div>{convertedText}</div>
+      { /*
+      <TextWriter text={convertedText} delay={10} />*/
+      }
     </div>
   );
 }
