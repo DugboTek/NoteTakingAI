@@ -9,6 +9,10 @@ const cors = require('cors');
 const app = express();
 const port = 3001;
 
+
+//TODO: add Whisper API integration
+//whisper
+
 const configuration = new Configuration({
     organization: "org-z6irWsTc2C2dIvnVg5TEG2gE",
    // apiKey: "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",
@@ -29,7 +33,7 @@ app.post('/', async (req, res) => {
 	const response = await openai.createChatCompletion({
 		model: "gpt-3.5-turbo",
 		messages: [{role: "user", content: `${message}`}],
-		max_tokens: 20,
+		max_tokens: 2500,
 		temperature: 0,
 	});
 
