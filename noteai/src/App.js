@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import './App.css'
 import TextWriter from './components/TextWriter.js';
+import UploadFileBox from './components/UploadFileBox';
+import DropFileInput from './components/Drop-File-Input/DropFileInput';
 
 
 function App() {
@@ -91,12 +93,9 @@ const sendAudio = async () => {
 
   return (
     <div className="App">
+      <UploadFileBox/>
       <h1>Quick Note</h1>
-      <input
-            type="file"
-            accept="audio/*"
-            onChange={handleFile}
-      />
+    
       <button onClick={sendAudio}>Send Audio</button>
       <form onSubmit={handleSubmit}>
         <textarea value={message} onChange={(e) => setMessage(e.target.value)} />

@@ -245,3 +245,4 @@ Thumbs.db
 .env
 .env.test
 *.pack
+noteai/node_modules/.cache/.eslintcache
