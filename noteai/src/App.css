@@ -67,6 +67,7 @@ body {
   user-select: none;
   touch-action: manipulation;
   line-height: 1.1;
+  border-radius: 5px;
 
 }
 
@@ -85,6 +86,7 @@ body {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  text-align: left;
 }
 
 .boxdefault{
@@ -106,17 +108,18 @@ body {
   grid-template-areas:
     "header header"
     "left-rail right-rail";
-  grid-template-columns: .75fr 1fr;
+  grid-template-columns: 1fr .2fr;
   grid-template-rows: auto 1fr;
   margin: 15px;
   background-color: var(--box-bg);
   padding:0.75rem;
   border-radius: 20px;
   box-shadow: var(--box-shadow);
+  max-width: 1500px;
 }
 
 .topology-mini{
-  font-size: 12px;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.45);
   margin-top: 0.25rem;
   word-break: break-word;
