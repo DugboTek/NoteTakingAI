@@ -28,6 +28,7 @@ const DropFileInput = (props) => {
       setFormData(data);
       console.log('File Uploaded- its me im handling the file');
       props.setFormData(data);
+      //onFormDataChange(data);
 
       setHasFile(true); // set the flag to true
       if (file.size > 25 * 1024 * 1024) {
@@ -43,7 +44,7 @@ const DropFileInput = (props) => {
     const updatedList = [...fileList];
     updatedList.splice(index, 1);
     setFileList(updatedList);
-    props.onFileChange(updatedList);
+    //props.onFileChange(updatedList);
   };
 
   return (
@@ -60,7 +61,6 @@ const DropFileInput = (props) => {
           <p>Drag & Drop your file here.</p>
         </div>
         <input type='file' accept='audio/*' onChange={handleFile} />
-        {hasFile && props.children(formData)}
       </div>
       {fileList.length > 0 ? (
         <div className='drop-file-preview'>
@@ -89,8 +89,8 @@ const DropFileInput = (props) => {
   );
 };
 
-DropFileInput.propTypes = {
+/*DropFileInput.propTypes = {
   onFileChange: PropTypes.func.isRequired,
-};
+};*/
 
 export default DropFileInput;

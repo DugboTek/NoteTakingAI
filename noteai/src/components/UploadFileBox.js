@@ -8,7 +8,7 @@ const UploadFileBox = (props) => {
 	
 	const [convertedText, setConvertedText] = useState("");
 	const [loading, setLoading] = useState(false);
-	//const [formData, setFormData] = useState(null);
+	const [formData, setFormData] = useState(null);
 	const [hasFile, setHasFile] = useState(false);
 	const api_key = process.env.OPEN_AI_KEY;
 
@@ -38,7 +38,7 @@ const UploadFileBox = (props) => {
 
 	
 
-	const sendAudio = (formData) => async () => {
+	const sendAudio = async () => {
 		setLoading(true);
 		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
 		  headers: {
@@ -55,6 +55,12 @@ const UploadFileBox = (props) => {
 		props.onClick(convertedText);
 	  };
 
+	const handleFormDataChange = (data) => {
+        setFormData(data);
+		console.log(data);
+		console.log("Form Data handled");
+    }
+
 
 	return(
 		<div className="box">
@@ -62,17 +68,14 @@ const UploadFileBox = (props) => {
 				Get Summerized Lectures With AI
 			</h2>
 			{
-			<DropFileInput>
-				{(formData)=>(
-					<button type = "button" className ="ant-btn" onClick={() => sendAudio(formData)}>Send Audio</button>
-				)}
-			</DropFileInput>
+			<DropFileInput setFormData={setFormData}/>
 				//setFormData={setFormData}
 				//onFileChange={handleFile}
 
 
 			}
-			
+			<button type = "button" className ="ant-btn" onClick={sendAudio}>Send Audio</button>
+
 		</div>
 	)
 };
