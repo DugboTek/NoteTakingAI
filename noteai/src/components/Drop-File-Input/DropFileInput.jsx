@@ -11,6 +11,8 @@ const DropFileInput = (props) => {
   const [fileList, setFileList] = useState([]);
   const [hasFile, setHasFile] = useState(false);
   const [formData, setFormData] = useState(null);
+  const [convertedText, setConvertedText] = useState("");
+	const [loading, setLoading] = useState(false);
 
   const onDrageEnter = () => wrapperRef.current.classList.add('dragover');
   const onDrageLeave = () => wrapperRef.current.classList.remove('dragover');
@@ -38,6 +40,23 @@ const DropFileInput = (props) => {
     }
   };
 
+  const sendAudio = async () => {
+		setLoading(true);
+		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+		  headers: 
+			`Authorization: Bearer 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`
+		  ,
+		  method: "POST",
+		  body: formData,
+		});
+		console.log("audio sent");
+		const data = await res.json();
+		setLoading(false);
+		console.log(data.text);
+		setConvertedText(data.text);
+		props.onClick(convertedText);
+	  };
+
   const fileRemove = (index) => {
     const updatedList = [...fileList];
     updatedList.splice(index, 1);
@@ -59,6 +78,8 @@ const DropFileInput = (props) => {
           <p>Drag & Drop your file here.</p>
         </div>
         <input type='file' accept='audio/*' onChange={handleFile} />
+        <button type = "button" className ="ant-btn" onClick={sendAudio}>Send Audio</button>
+
       </div>
       {fileList.length > 0 ? (
         <div className='drop-file-preview'>
@@ -84,6 +105,7 @@ const DropFileInput = (props) => {
         </div>
       ) : null}
     </div>
+
   );
 };
 

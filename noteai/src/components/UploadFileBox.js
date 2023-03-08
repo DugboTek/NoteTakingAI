@@ -36,22 +36,7 @@ const UploadFileBox = (props) => {
 		}
 	}
 
-	const sendAudio = async () => {
-		setLoading(true);
-		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
-		  headers: 
-			`Authorization: Bearer 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`
-		  ,
-		  method: "POST",
-		  body: formData,
-		});
-		console.log("audio sent");
-		const data = await res.json();
-		setLoading(false);
-		console.log(data.text);
-		setConvertedText(data.text);
-		props.onClick(convertedText);
-	  };
+	
 
 
 	return(
@@ -63,7 +48,6 @@ const UploadFileBox = (props) => {
 			<DropFileInput/>
 
 			}
-			<button type = "button" className ="ant-btn" onClick={sendAudio}>Send Audio</button>
 		</div>
 	)
 };
