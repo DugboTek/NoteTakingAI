@@ -8,12 +8,12 @@ const UploadFileBox = (props) => {
 	
 	const [convertedText, setConvertedText] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [formData, setFormData] = useState(null);
+	//const [formData, setFormData] = useState(null);
 	const [hasFile, setHasFile] = useState(false);
 	const api_key = process.env.OPEN_AI_KEY;
 
 
-	const handleFile = async(e) =>{
+	/*const handleFile = async(e) =>{
   
 		if (e.target.files && e.target.files[0]) 
 		{
@@ -23,7 +23,7 @@ const UploadFileBox = (props) => {
 		  data.append("model", "whisper-1");
 		  setFormData(data);
 		  console.log("File Uploaded");
-	  
+		  console.log(data);
 		  setHasFile(true); // set the flag to true
 		  if (file.size > 25 * 1024 * 1024) 
 		  {
@@ -34,21 +34,23 @@ const UploadFileBox = (props) => {
 			return;
 		  }
 		}
-	}
+	}*/
 
-	const sendAudio = async () => {
+	
+
+	const sendAudio = (formData) => async () => {
 		setLoading(true);
 		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
-		  headers: 
-			`Authorization: Bearer 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`
-		  ,
+		  headers: {
+			"Authorization": `Bearer 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`
+		  },
 		  method: "POST",
 		  body: formData,
 		});
 		console.log("audio sent");
 		const data = await res.json();
 		setLoading(false);
-		console.log(data.text);
+		console.log(data);
 		setConvertedText(data.text);
 		props.onClick(convertedText);
 	  };
@@ -60,10 +62,17 @@ const UploadFileBox = (props) => {
 				Get Summerized Lectures With AI
 			</h2>
 			{
-			<DropFileInput/>
+			<DropFileInput>
+				{(formData)=>(
+					<button type = "button" className ="ant-btn" onClick={() => sendAudio(formData)}>Send Audio</button>
+				)}
+			</DropFileInput>
+				//setFormData={setFormData}
+				//onFileChange={handleFile}
+
 
 			}
-			<button type = "button" className ="ant-btn" onClick={sendAudio}>Send Audio</button>
+			
 		</div>
 	)
 };

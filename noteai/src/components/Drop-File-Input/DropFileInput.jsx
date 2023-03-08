@@ -21,12 +21,13 @@ const DropFileInput = (props) => {
       const file = e.target.files[0];
       const updatedList = [...fileList, file];
       setFileList(updatedList);
-      props.onFileChange(updatedList);
+     // props.onFileChange(updatedList);
       const data = new FormData();
       data.append('file', file);
       data.append('model', 'whisper-1');
       setFormData(data);
-      console.log('File Uploaded');
+      console.log('File Uploaded- its me im handling the file');
+      props.setFormData(data);
 
       setHasFile(true); // set the flag to true
       if (file.size > 25 * 1024 * 1024) {
@@ -59,6 +60,7 @@ const DropFileInput = (props) => {
           <p>Drag & Drop your file here.</p>
         </div>
         <input type='file' accept='audio/*' onChange={handleFile} />
+        {hasFile && props.children(formData)}
       </div>
       {fileList.length > 0 ? (
         <div className='drop-file-preview'>
