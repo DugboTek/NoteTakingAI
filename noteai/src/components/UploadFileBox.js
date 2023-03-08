@@ -1,6 +1,6 @@
 //import react
 import React, { useState } from 'react';
-import DropFileInput from './Drop-File-Input/DropFileInput.jsx';
+import DropFileInput from './Drop-File-Input/DropFileInput';
 
 const UploadFileBox = () => {
 	return(

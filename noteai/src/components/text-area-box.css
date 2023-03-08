@@ -1,0 +1,76 @@
+.boxarea {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 70vw;
+	height: 50vh;
+	background-color: #fff;
+	flex-direction: column;
+  }
+
+  .boxarea .header-area {
+	font-size: 2.5rem;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 2rem;
+  }
+  
+  .text-area {
+	display: flex;
+	flex: 1 1;
+	flex-basis: 0;
+	flex-direction: column;
+	overflow-x:hidden;
+	overflow-y: auto;
+	padding-bottom: 1rem;
+  }
+
+  
+
+  .output-format{
+	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+    font-size: 12px;
+	word-break: break-word;
+	line-height: 1.1;
+  }
+  
+  .text-area div {
+	font-size: 1.5rem;
+	line-height: 2rem;
+	text-align: justify;
+  }
+
+  .results-card{
+	display: flex;
+	flex: 1 1;
+	flex-direction: column;
+}
+
+.result-card box-body{
+	display: flex;
+	flex: 1 1;
+	flex-direction: column;
+
+}
+  
+  @media (min-width: 768px) {
+	.boxarea {
+	  flex-direction: column;
+	}
+  
+	.boxarea .headerb {
+	  font-size: 3rem;
+	  margin-right: 5rem;
+	  margin-bottom: 0;
+	  text-align: left;
+	}
+  
+	.text-area {
+	  max-height: 100%;
+	}
+
+	
+
+
+  }
+  

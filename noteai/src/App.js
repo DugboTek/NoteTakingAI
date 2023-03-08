@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import './App.css'
 import TextWriter from './components/TextWriter.js';
 import UploadFileBox from './components/UploadFileBox';
+import TextAreaBox from './components/TextAreaBox';
 import DropFileInput from './components/Drop-File-Input/DropFileInput';
 
 
@@ -93,16 +94,42 @@ const sendAudio = async () => {
 
   return (
     <div className="App">
-      <UploadFileBox/>
       <h1>Quick Note</h1>
-    
+      
+      <div className="content-box">
+        <div className="header-area">
+          <div className ="boxdefault">
+            <div class = "header-text-area">
+              <div className="box-body">
+
+                <div className ="form-header-title">
+                  <h4 className="toplogy">
+                    <span class ="primaryTextColor">Need Notes?</span>
+                    We've got this.
+                  </h4>
+                  <span className="toplolgy-mini">
+                    Get Summerized Lectures With AI
+                  </span>
+                </div>
+                <div className ="primary-action-btn gradient-animated-box">
+                  <button type="butt" className="ant-btn"></button>
+                  <span className ="mr4">Upgrade</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="left-rail-area flex">
+          <TextAreaBox text ={convertedText}/>
+        </div>
+        <div className="right-rail-area flex">
+        <UploadFileBox/>
+        </div>
+      </div>
+
       <button onClick={sendAudio}>Send Audio</button>
-      <form onSubmit={handleSubmit}>
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
-        <button type="submit">Submit</button>
-      </form>
-      <div>{response}</div>
-      <div>{convertedText}</div>
+      
       { /*
       <TextWriter text={convertedText} delay={10} />*/
       }
