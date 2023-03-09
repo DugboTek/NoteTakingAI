@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import './App.css'
-import TextWriter from './components/TextWriter.js';
 import UploadFileBox from './components/UploadFileBox';
 import TextAreaBox from './components/TextAreaBox';
 import DropFileInput from './components/Drop-File-Input/DropFileInput';
@@ -94,16 +93,16 @@ const getData = (textdata) => {
           </div>
         </div>
         <div className="left-rail-area flex">
-          <TextAreaBox text ={textdata}/>
+          <TextAreaBox text ={convertedText}/>
         </div>
         <div className="right-rail-area flex">
-        <UploadFileBox onClick={getData}/>
+        <UploadFileBox onConvertedText ={setConvertedText}/>
         </div>
       </div>
 
       
-      { /*
-      <TextWriter text={convertedText} delay={10} />*/
+      { 
+     
       }
     </div>
   );

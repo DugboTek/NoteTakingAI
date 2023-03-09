@@ -50,6 +50,10 @@ body {
   justify-content: center;
 }
 
+.ant-btn padded{
+  padding-top: 30px;
+}
+
 .ant-btn{
   height: 50px;
   padding: 16.299999997px 19px;

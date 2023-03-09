@@ -52,7 +52,7 @@ const UploadFileBox = (props) => {
 		setLoading(false);
 		console.log(data);
 		setConvertedText(data.text);
-		props.onClick(convertedText);
+		props.onConvertedText(data.text);
 	  };
 
 	const handleFormDataChange = (data) => {
@@ -74,7 +74,7 @@ const UploadFileBox = (props) => {
 
 
 			}
-			<button type = "button" className ="ant-btn" onClick={sendAudio}>Send Audio</button>
+			<button type = "button" className ="ant-btn padded" onClick={sendAudio}>Send Audio</button>
 
 		</div>
 	)
