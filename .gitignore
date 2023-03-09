@@ -247,3 +247,4 @@ Thumbs.db
 *.pack
 noteai/node_modules/.cache/.eslintcache
 noteai/node_modules/.cache/.eslintcache
+*.json
