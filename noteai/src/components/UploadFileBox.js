@@ -4,21 +4,48 @@ import DropFileInput from './Drop-File-Input/DropFileInput';
 const OpenAI = require('openai');
 const {Configuration, OpenAIApi} = OpenAI;
 
+const key = process.env.React_App_OPEN_AI_API_KEY;
+console.log(key);
+
 const UploadFileBox = (props) => {
 	
 	const [convertedText, setConvertedText] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState(null);
 	const [hasFile, setHasFile] = useState(false);
-	const api_key = process.env.OPEN_AI_KEY;
+	const [message, setMessage] = useState('')
+	const [response, setResponse] = useState('')
 
+	const api_key = process.env.OPEN_AI_API_KEY;
+	
+
+	const handleSubmit = async (inputText) => {
+		const response = await fetch('http://localhost:3001', {
+		  method: 'POST',
+		  headers: {
+			'Content-Type': 'application/json'
+		  },
+		  body: JSON.stringify({inputText}),
+		})
+		const data = await response.json();
+		setResponse(data.message);
+		//props.setConvertedText(data.message);
+		props.onConvertedText(data.message);
+		console.log(data.message);
+		/*.then(res => res.json())
+		.then((data) => setResponse(data.message))
+		.then((data) => setConvertedText(data.message))
+		.then((data) => props.onConvertedText(data.message));*/
+		console.log("submitted");
+
+	  };
 
 	/*const handleFile = async(e) =>{
   
 		if (e.target.files && e.target.files[0]) 
 		{
 		  const file = e.target.files[0];
-		  const data = new FormData();
+		  const data = new FormData();~
 		  data.append("file", file);
 		  data.append("model", "whisper-1");
 		  setFormData(data);
@@ -42,7 +69,7 @@ const UploadFileBox = (props) => {
 		setLoading(true);
 		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
 		  headers: {
-			"Authorization": `Bearer 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`
+			"Authorization": `Bearer ${key}`
 		  },
 		  method: "POST",
 		  body: formData,
@@ -53,14 +80,8 @@ const UploadFileBox = (props) => {
 		console.log(data);
 		setConvertedText(data.text);
 		props.onConvertedText(data.text);
+		handleSubmit(data.text);
 	  };
-
-	const handleFormDataChange = (data) => {
-        setFormData(data);
-		console.log(data);
-		console.log("Form Data handled");
-    }
-
 
 	return(
 		<div className="box">

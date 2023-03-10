@@ -18,6 +18,8 @@ const TextAreaBox = (props) => {
 				<div className = "box-body">
 					<div className="text-area">
 						<h1 className="text-area-title">Your Notes</h1>
+						<div className="loader">
+						</div>	
 						<div className = "output-format" id="outputDiv">
 						<TextWriter text={text} delay={50} divId="outputDiv" />
 						</div>

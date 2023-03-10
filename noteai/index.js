@@ -23,22 +23,32 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 app.use(bodyParser.json());
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(cors());
+
 
 app.post('/', async (req, res) => {
 	// Destructure the `message` property from the `req.body` object using curly braces
 	// This allows us to extract the `message` property and assign it to a variable with the same name
 	const { message } = req.body;
-
+	console.log("message request:");
+	console.log(JSON.stringify(req.body));
 	// Send a response back to the client with the message property
+
+	//	{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details."},
 	const response = await openai.createChatCompletion({
 		model: "gpt-3.5-turbo",
-		messages: [{role: "user", content: `${message}`}],
+		messages: [
+					{role: "system","content": "You are a helpful note generating robot that generates notes on important topics or details given an audio transcription."},
+					{role: "user", "content": `${JSON.stringify(req.body)}`}
+				],
 		max_tokens: 2500,
 		temperature: 0,
 	});
 
-	console.log(response.data);
+	console.log(response.data.choices[0].message.content);
+	console.log("app.post() called");
 
 	if(response.data) {
 		if(response.data.choices) {

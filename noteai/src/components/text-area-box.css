@@ -23,13 +23,12 @@
 	overflow-x:hidden;
 	overflow-y: auto;
 	padding-bottom: 1rem;
+	width: 30vw;
   }
-
-
 
   .output-format{
 	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
-    font-size: 12px;
+    font-size: 10px;
 	word-break: break-word;
 	line-height: 1.1;
   }
