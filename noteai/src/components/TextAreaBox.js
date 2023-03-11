@@ -13,7 +13,7 @@ const fillerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Don
 const TextAreaBox = (props) => {
 	const{text} = props;
 	console.log("TextArea")
-	//<TextWriter text={text} delay={50} divId="outputDiv" />
+	//
 	console.log(text);
 	return(
 		<div className="flex flex-column flex-1">
@@ -42,7 +42,9 @@ const TextAreaBox = (props) => {
 									skipHtml={false}   // allows rendering of HTML tags
 									linkTarget="_blank" // opens links in a new tab
 								>
-									{text}
+									{
+									text
+									}
 								</ReactMarkdown>
 							}	
 							</div>

@@ -97,7 +97,7 @@ const getData = (textdata) => {
         </div>
         <div className="left-rail-area flex">
            
-            <TextAreaBox text ={convertedText} loading ={true}/>
+            <TextAreaBox text ={convertedText} loading ={loading}/>
           
         </div>
         <div className="right-rail-area flex">
