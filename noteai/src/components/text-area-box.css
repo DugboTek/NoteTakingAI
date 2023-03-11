@@ -8,6 +8,8 @@
 	flex-direction: column;
   }
 
+  
+
   .boxarea .header-area {
 	font-size: 2.1rem;
 	font-weight: bold;
@@ -20,10 +22,19 @@
 	flex: 1 1;
 	flex-basis: 0;
 	flex-direction: column;
-	overflow-x:hidden;
-	overflow-y: auto;
+	overflow-y: scroll;
+	overflow-x: visible;
+	width: 60vw;
+	margin:auto;
+	word-wrap:break-word
+  }
+  
+  .text-area .headerb {
 	padding-bottom: 1rem;
-	width: 30vw;
+  }
+  
+  ul {
+	list-style-type: circle;
   }
 
   .output-format{

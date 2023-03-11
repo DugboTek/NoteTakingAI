@@ -29,7 +29,8 @@ const UploadFileBox = (props) => {
 		})
 		const data = await response.json();
 		setResponse(data.message);
-		//props.setConvertedText(data.message);
+		setConvertedText(data.message);
+	//	props.setConvertedText(data.message);
 		props.onConvertedText(data.message);
 		console.log(data.message);
 		/*.then(res => res.json())
@@ -78,13 +79,13 @@ const UploadFileBox = (props) => {
 		const data = await res.json();
 		setLoading(false);
 		console.log(data);
-		setConvertedText(data.text);
-		props.onConvertedText(data.text);
+		//setConvertedText(data.text);
+		//props.onConvertedText(data.text);
 		handleSubmit(data.text);
 	  };
 
 	return(
-		<div className="box">
+		<div className="box--upload">
 			<h2 className="header">
 				Get Summerized Lectures With AI
 			</h2>
@@ -95,7 +96,7 @@ const UploadFileBox = (props) => {
 
 
 			}
-			<button type = "button" className ="ant-btn padded" onClick={sendAudio}>Send Audio</button>
+			<button type = "button" className ="ant-btn padded marginTop" onClick={sendAudio}>Generate Notes</button>
 
 		</div>
 	)

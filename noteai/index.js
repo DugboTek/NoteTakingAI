@@ -41,6 +41,7 @@ app.post('/', async (req, res) => {
 		model: "gpt-3.5-turbo",
 		messages: [
 					{role: "system","content": "You are a helpful note generating robot that generates notes on important topics or details given an audio transcription."},
+					{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details. You will return the output in markdown format, for the header use ## for the Header and ### for subheaders, bold and italisize words that are important in the transcript and provide bulleted-list of important vocabulary and defintions. after every new line create an aditional new line character."},
 					{role: "user", "content": `${JSON.stringify(req.body)}`}
 				],
 		max_tokens: 2500,
@@ -53,7 +54,7 @@ app.post('/', async (req, res) => {
 	if(response.data) {
 		if(response.data.choices) {
 			res.json({
-				message: JSON.stringify(response.data.choices[0].message.content)
+				message: response.data.choices[0].message.content
 			})
 		}
 	}

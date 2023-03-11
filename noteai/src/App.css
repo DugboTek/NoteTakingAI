@@ -13,7 +13,6 @@
 
 * {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -42,8 +41,67 @@ body {
 
 }
 
+div {
+  height: max-content;
+}
+
+.toplogy{
+  font-size: 1.5rem;
+}
+
+button:active {
+  background: #e5e5e5;
+  -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+          box-shadow: inset 0px 0px 5px #c1c1c1;
+   outline: none;
+}
+
+
+.box--upload{
+  background-color: var(--box-bg);
+  padding:30px;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+	display:grid;
+	grid-template-rows: .1fr 2fr 1fr;
+	grid-template-columns: 1fr;
+  }
+
+  .marginTop{
+    margin-top: 20px;
+  }
+
+.text-area-title{
+  border-bottom: 2px solid var(--text-second-color);
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.toplolgy-mini{
+  font-size: 1rem;
+}
+
+.box--upload .header{
+  font-size: 1.3rem;
+}
+
 .align-items-center{
   align-items: center;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  }
+
+.text-area{
+  overflow-x: visible;
+  overflow-y: scroll;
+}
+
+.output-format{
+  overflow-x: visible;
 }
 
 .justify-content-center{
@@ -62,7 +120,7 @@ body {
   background-color: var(--text-second-color);
   outline: none;
   position: relative;
-  font-weight: 400;
+  font-weight: 500;
   white-space: nowrap;
   text-align: center;
   border: 1px solid transparent;
@@ -72,6 +130,7 @@ body {
   touch-action: manipulation;
   line-height: 1.1;
   border-radius: 5px;
+  font-size: 1rem;
 
 }
 
@@ -122,6 +181,8 @@ body {
   max-width: 1500px;
 }
 
+
+
 .topology-mini{
   font-size: 20px;
   color: rgba(255, 255, 255, 0.45);
@@ -170,6 +231,32 @@ body {
   margin-bottom: 30px;
   text-align: center;
 
+}
+
+ul{
+  display:list-item;
+}
+li::marker{
+  content: initial;
+}
+
+ul li::marker {
+  display:list-item;
+  content: initial;
+
+  color: black;
+}
+li{
+  display:list-item;
+  margin-left: 10px;
+  list-style-type: circle;
+}
+
+.output-format h2{
+  font-size: 1.23rem;
+  line-height: 1.1;
+  word-spacing: 0;
+  display:list-item;
 }
 
 .App {

@@ -5,6 +5,7 @@ import './App.css'
 import UploadFileBox from './components/UploadFileBox';
 import TextAreaBox from './components/TextAreaBox';
 import DropFileInput from './components/Drop-File-Input/DropFileInput';
+import ReactMarkdown from 'react-markdown'
 //import ion-icon
 
 function App() {
