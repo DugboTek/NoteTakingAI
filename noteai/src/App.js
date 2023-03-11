@@ -5,14 +5,16 @@ import './App.css'
 import UploadFileBox from './components/UploadFileBox';
 import TextAreaBox from './components/TextAreaBox';
 import DropFileInput from './components/Drop-File-Input/DropFileInput';
+import { MoonLoader } from 'react-spinners';
 import ReactMarkdown from 'react-markdown'
 //import ion-icon
 
-function App() {
+function App(props) {
   const [message, setMessage] = useState('')
   const [response, setResponse] = useState('')
 
   const [convertedText, setConvertedText] = useState("");
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -66,7 +68,7 @@ const getData = (textdata) => {
 
   return (
     <div className="App">
-      <h1>Quick Note</h1>
+      <h1>Jotomate</h1>
       
       <div className="content-box">
         <div className="header-area">
@@ -94,10 +96,12 @@ const getData = (textdata) => {
           </div>
         </div>
         <div className="left-rail-area flex">
-          <TextAreaBox text ={convertedText}/>
+           
+            <TextAreaBox text ={convertedText} loading ={true}/>
+          
         </div>
         <div className="right-rail-area flex">
-        <UploadFileBox onConvertedText ={setConvertedText}/>
+        <UploadFileBox onConvertedText ={setConvertedText} isLoading ={setLoading}/>
         </div>
       </div>
 

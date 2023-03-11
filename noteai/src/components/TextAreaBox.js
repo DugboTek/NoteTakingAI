@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import DropFileInput from './Drop-File-Input/DropFileInput';
 import TextWriter from './TextWriter.js';
 import ReactMarkdown from 'react-markdown'
+import { ScaleLoader } from 'react-spinners';
 
 import './text-area-box.css';
 import TextWriteOut from './textWriteOut';
@@ -24,14 +25,26 @@ const TextAreaBox = (props) => {
 						</div>	
 						
 							<div className = "output-format" id="outputDiv">
-							<ReactMarkdown 
-								source={text}
-								escapeHtml={false} // allows rendering of HTML tags
-								skipHtml={false}   // allows rendering of HTML tags
-								linkTarget="_blank" // opens links in a new tab
-              				>
-								{text}
-							</ReactMarkdown>
+							{
+								props.loading ?
+								
+								<ScaleLoader
+								size={50}
+								color={"#cd5f44"}
+								loading={props.loading}
+								/>
+
+								:
+							
+								<ReactMarkdown 
+									source={text}
+									escapeHtml={false} // allows rendering of HTML tags
+									skipHtml={false}   // allows rendering of HTML tags
+									linkTarget="_blank" // opens links in a new tab
+								>
+									{text}
+								</ReactMarkdown>
+							}	
 							</div>
 						
 					</div>

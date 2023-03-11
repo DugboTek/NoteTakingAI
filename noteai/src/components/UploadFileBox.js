@@ -32,6 +32,8 @@ const UploadFileBox = (props) => {
 		setConvertedText(data.message);
 	//	props.setConvertedText(data.message);
 		props.onConvertedText(data.message);
+		setLoading(false);
+		props.isLoading(false);
 		console.log(data.message);
 		/*.then(res => res.json())
 		.then((data) => setResponse(data.message))
@@ -41,6 +43,7 @@ const UploadFileBox = (props) => {
 
 	  };
 
+	  
 	/*const handleFile = async(e) =>{
   
 		if (e.target.files && e.target.files[0]) 
@@ -67,6 +70,7 @@ const UploadFileBox = (props) => {
 	
 
 	const sendAudio = async () => {
+		props.isLoading(true);
 		setLoading(true);
 		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
 		  headers: {
@@ -77,7 +81,6 @@ const UploadFileBox = (props) => {
 		});
 		console.log("audio sent");
 		const data = await res.json();
-		setLoading(false);
 		console.log(data);
 		//setConvertedText(data.text);
 		//props.onConvertedText(data.text);
