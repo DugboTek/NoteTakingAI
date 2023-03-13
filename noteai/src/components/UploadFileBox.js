@@ -4,7 +4,7 @@ import DropFileInput from './Drop-File-Input/DropFileInput';
 const OpenAI = require('openai');
 const {Configuration, OpenAIApi} = OpenAI;
 
-const key = process.env.React_App_OPEN_AI_API_KEY;
+const 	key = process.env.React_App_OPEN_AI_API_KEY;
 console.log(key);
 
 const UploadFileBox = (props) => {
@@ -99,6 +99,12 @@ const UploadFileBox = (props) => {
 
 
 			}
+			<form>
+				<div class = "input-container">
+					<input type="text" id="subject" name="subject" placeholder="Enter The Class Subject" required class = "text-input"/>
+					<label for="subject" class = "label">Subject</label>
+				</div>
+			</form>
 			<button type = "button" className ="ant-btn padded marginTop" onClick={sendAudio}>Generate Notes</button>
 
 		</div>

@@ -68,7 +68,7 @@ const getData = (textdata) => {
 
   return (
     <div className="App">
-      <h1>Jotomate</h1>
+      <h1>Scribb</h1>
       
       <div className="content-box">
         <div className="header-area">
@@ -78,8 +78,8 @@ const getData = (textdata) => {
 
                 <div className ="form-header-title">
                   <h4 className="toplogy">
-                    <span class ="primaryTextColor">Need Notes?</span>
-                    We've got this.
+                    <span class ="primaryTextColor">Need Notes? </span>
+                    Scribb
                   </h4>
                   <span className="toplolgy-mini">
                     Get Summerized Lectures With AI

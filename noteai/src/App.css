@@ -6,7 +6,7 @@
   --box-bg: #fff;
   --input-bg: #f5f8ff;
   --text-color: #2f2d2f;
-  --text-second-color: #cd5f44;
+  --text-second-color: #5ccd78df;
   --border-color: #4267b2;
   --box-shadow: rgba(149,157,165,.2) 0px 8px 24px;
 }
@@ -64,7 +64,7 @@ button:active {
   border-radius: 20px;
   box-shadow: var(--box-shadow);
 	display:grid;
-	grid-template-rows: .1fr 2fr 1fr;
+	grid-template-rows: .1fr 1fr .2fr .1fr;
 	grid-template-columns: 1fr;
   }
 
@@ -217,7 +217,11 @@ button:active {
 }
 
   .primaryTextColor {
-    color: #ee6c4d;
+    color: var(--text-second-color);
+}
+
+h1{
+  color: var(--text-second-color);  
 }
 
 
@@ -298,4 +302,73 @@ li{
   to {
     transform: rotate(360deg);
   }
+}
+
+.input-container{
+  display:flex;
+	position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.label{
+  position: absolute;
+  left: 25px;
+  top: 14px;
+  transition: all 0.2s;
+  padding: 0 2px;
+  z-index: 1;
+  color: black;
+
+}
+
+.text-input{
+  padding: 0.8rem;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--text-second-color);
+  background-color: var(--input-bg);
+  border-radius: 5px;
+  font-size: 18px;
+  outline: none;
+  transition: all .3s;
+  color: #fff;
+}
+
+.label::before{
+  content: "";
+  height: 5px;
+  background-color: var(--box-bg);
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 100%;
+  z-index: -1;
+}
+
+form{
+  height: max-content;
+}
+
+.text-input:focus{
+  border: 2px solid #ee6c4d;
+}
+
+.text-input:focus + .label,
+.filled{
+  top: -10px;
+  color: #ee6c4d;
+  font-size: 13px;
+}
+
+.text-input::placeholder{
+  font-size: 16px;
+  opacity: 0;
+  transition: all .3s;
+}
+
+.text-input:focus::placeholder{
+  opacity: 1;
 }

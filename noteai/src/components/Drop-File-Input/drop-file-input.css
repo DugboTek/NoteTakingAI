@@ -87,6 +87,8 @@
 	transition: all 0.3s ease;
 }
 
+
+
 .drop-file-preview__item:hover .drop-file-input__item__del{
 	opacity: 1;
 }
