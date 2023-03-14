@@ -265,3 +265,5 @@ noteai/node_modules/.cache/default-development/10.pack
 noteai/node_modules/.cache/default-development/1.pack
 noteai/node_modules/.cache/default-development/0.pack
 noteai/node_modules/.cache/.eslintcache
+*.pack
+*.old
