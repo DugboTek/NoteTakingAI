@@ -3,10 +3,10 @@
 
 :root{
   --body-bg: #f5f8ff;
-  --box-bg: #fff;
+  --box-bg: #;
   --input-bg: #f5f8ff;
   --text-color: #2f2d2f;
-  --text-second-color: #5ccd78df;
+  --text-second-color: #eb5e28;
   --border-color: #4267b2;
   --box-shadow: rgba(149,157,165,.2) 0px 8px 24px;
 }
@@ -323,6 +323,7 @@ li{
 }
 
 .text-input{
+  margin-top: 50px;
   padding: 0.8rem;
   margin-left: 20px;
   margin-right: 20px;
@@ -334,7 +335,7 @@ li{
   font-size: 18px;
   outline: none;
   transition: all .3s;
-  color: #fff;
+  color: black;
 }
 
 .label::before{
@@ -356,19 +357,20 @@ form{
   border: 2px solid #ee6c4d;
 }
 
-.text-input:focus + .label,
+.text-input + .label,
 .filled{
-  top: -10px;
+  top: 30px;
   color: #ee6c4d;
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .text-input::placeholder{
   font-size: 16px;
-  opacity: 0;
+  opacity: 1;
   transition: all .3s;
 }
 
 .text-input:focus::placeholder{
-  opacity: 1;
+  opacity: 0;
 }

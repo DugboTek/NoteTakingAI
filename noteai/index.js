@@ -11,6 +11,8 @@ const port = 3001;
 
 
 
+
+
 //TODO: add Whisper API integration
 //whisper
 
@@ -27,6 +29,22 @@ app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(cors());
 
+var subject = '';
+
+function setSubject (inputSubject) {
+	subject = inputSubject;
+}
+
+
+app.post('/noteDetails', async (req, res) => {
+	
+	// Destructure the `message` property from the `req.body` object using curly braces
+	setSubject(req.body.userSubject);
+	console.log(req.body);
+	console.log("note Details:" + subject);
+	res.send({message: "note details received"});
+});
+
 
 app.post('/', async (req, res) => {
 	// Destructure the `message` property from the `req.body` object using curly braces
@@ -41,6 +59,7 @@ app.post('/', async (req, res) => {
 		model: "gpt-3.5-turbo",
 		messages: [
 					{role: "system","content": "You are a helpful note generating robot that generates notes on important topics or details given an audio transcription."},
+					{role: "user","content": "This is the class subject that the audio recording is about:" + `${subject}`+"use your prior knowlege on the topic to supplement the notes you generate. the title of the note should be Notes on: " + `${subject}`},
 					{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details. You will return the output in markdown format, for the header use ## for the Header and ### for subheaders, bold and italisize words that are important in the transcript and provide bulleted-list of important vocabulary and defintions. after every new line create an aditional new line character."},
 					{role: "user", "content": `${JSON.stringify(req.body)}`}
 				],

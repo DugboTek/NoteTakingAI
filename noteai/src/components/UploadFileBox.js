@@ -15,11 +15,20 @@ const UploadFileBox = (props) => {
 	const [hasFile, setHasFile] = useState(false);
 	const [message, setMessage] = useState('')
 	const [response, setResponse] = useState('')
+	const [userSubject, setUserSubject] = useState("");
 
 	const api_key = process.env.OPEN_AI_API_KEY;
 	
-
 	const handleSubmit = async (inputText) => {
+		//gets the subject from the user
+		const resp = await fetch('http://localhost:3001/noteDetails', {
+			method : 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({userSubject}),
+		});
+
 		const response = await fetch('http://localhost:3001', {
 		  method: 'POST',
 		  headers: {
@@ -84,6 +93,9 @@ const UploadFileBox = (props) => {
 		console.log(data);
 		//setConvertedText(data.text);
 		//props.onConvertedText(data.text);
+		//setUserSubject("Computer Networks");
+		console.log("userSubject in send audio");
+		console.log(userSubject);
 		handleSubmit(data.text);
 	  };
 
@@ -101,12 +113,12 @@ const UploadFileBox = (props) => {
 			}
 			<form>
 				<div class = "input-container">
-					<input type="text" id="subject" name="subject" placeholder="Enter The Class Subject" required class = "text-input"/>
+					<input type="text" onChange ={(e) => setUserSubject(e.target.value)} id="subject" name="subject" placeholder="Enter The Class Subject" required class = "text-input"/>
 					<label for="subject" class = "label">Subject</label>
 				</div>
-			</form>
+			
 			<button type = "button" className ="ant-btn padded marginTop" onClick={sendAudio}>Generate Notes</button>
-
+			</form>
 		</div>
 	)
 };

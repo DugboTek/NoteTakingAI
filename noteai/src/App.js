@@ -18,7 +18,8 @@ function App(props) {
 
 
 
-  const handleSubmit = async (e) => {
+  /*const handleSubmit = async (e) => {
+
     e.preventDefault()
     const response = await fetch('http://localhost:3001', {
       method: 'POST',
@@ -30,7 +31,7 @@ function App(props) {
     .then(res => res.json())
     .then((data) => setResponse(data.message));
     console.log("submitted");
-  };
+  };*/
 
 const [formData, setFormData] = useState(null);
 // write a handleFile function that takes in a file and sets the formData state to a new FormData object with the file appended to it
