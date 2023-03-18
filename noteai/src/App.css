@@ -64,7 +64,7 @@ button:active {
   border-radius: 20px;
   box-shadow: var(--box-shadow);
 	display:grid;
-	grid-template-rows: .1fr 1fr .2fr .1fr;
+	grid-template-rows: .2fr .1fr .3fr .1fr;
 	grid-template-columns: 1fr;
   }
 
@@ -232,10 +232,16 @@ h1{
   }
 
 .header{
-  margin-bottom: 30px;
+  display:flex;
+  position:relative;
   text-align: center;
-
+  max-height: max-content;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
 }
+
 
 ul{
   display:list-item;
@@ -373,4 +379,17 @@ form{
 
 .text-input:focus::placeholder{
   opacity: 0;
+}
+
+.record-button {
+  height: 8em;
+  width: 8em;
+  border-radius: 50%;
+  border-color: var(--text-second-color);
+  background-color: var(--body-bg);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.record-button:hover {
+  
 }
