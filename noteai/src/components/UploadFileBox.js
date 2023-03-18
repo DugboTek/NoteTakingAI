@@ -4,8 +4,8 @@ import DropFileInput from './Drop-File-Input/DropFileInput';
 const OpenAI = require('openai');
 const {Configuration, OpenAIApi} = OpenAI;
 
+
 const 	key = process.env.React_App_OPEN_AI_API_KEY;
-console.log(key);
 
 const UploadFileBox = (props) => {
 	
@@ -17,7 +17,48 @@ const UploadFileBox = (props) => {
 	const [response, setResponse] = useState('')
 	const [userSubject, setUserSubject] = useState("");
 
+
 	const api_key = process.env.OPEN_AI_API_KEY;
+
+	const configuration = new Configuration({
+		organization: "org-z6irWsTc2C2dIvnVg5TEG2gE",
+	});
+
+	const openai = new OpenAIApi(configuration);
+
+	const callGPT = async (messageInput,subjectInput) =>
+	{
+		const subject = subjectInput;
+		const message = messageInput;
+		console.log("message request:");
+		console.log(message);
+		// Send a response back to the client with the message property
+	
+		//	{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details."},
+		const response = await openai.createChatCompletion({
+			model: "gpt-3.5-turbo",
+			messages: [
+						{role: "system","content": "You are a helpful note generating robot that generates notes on important topics or details given an audio transcription."},
+						{role: "user","content": "This is the class subject that the audio recording is about:" + `${subject}`+"use your prior knowlege on the topic to supplement the notes you generate. the title of the note should be Notes on: " + `${subject}`},
+						{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details. You will return the output in markdown format, for the header use ## for the Header and ### for subheaders, bold and italisize words that are important in the transcript and provide bulleted-list of important vocabulary and defintions. after every new line create an aditional new line character."},
+						{role: "user", "content": `${JSON.stringify(message)}`}
+					],
+			max_tokens: 2500,
+			temperature: 0,
+		});
+
+		const data = await response.json();
+
+		setResponse(response.data.choices[0].message.content);
+		setConvertedText(response.data.choices[0].message.content);
+		props.onConvertedText(response.data.choices[0].message.content);
+		setLoading(false);
+		props.isLoading(false);
+		console.log(response.data.choices[0].message.content);
+		console.log("submitted");
+		
+	};
+
 	
 	const handleSubmit = async (inputText) => {
 		//gets the subject from the user
@@ -96,7 +137,7 @@ const UploadFileBox = (props) => {
 		//setUserSubject("Computer Networks");
 		console.log("userSubject in send audio");
 		console.log(userSubject);
-		handleSubmit(data.text);
+		callGPT(data.text,userSubject);
 	  };
 
 	return(
