@@ -24,6 +24,7 @@ const UploadFileBox = (props) => {
 	const [toggle, setToggle] = useState(false);
 	const [file, setFile] = useState(null);
 	const [formDataUpdated, setFormDataUpdated] = useState(false); //form data state flag
+	const [audioBlobs, setAudioBlobs] = useState([]); // state variable to store audio blobs
 
 	let record = false;
 
@@ -41,6 +42,21 @@ const UploadFileBox = (props) => {
 		  setFormDataUpdated(false);
 		}
 	  }, [formData, formDataUpdated]);
+
+
+	 useEffect(() => {
+		// call sendAudioFile with each oneMinuteBlob produced by toggleAudioRecording
+		console.log("useEffect called one minute blob");
+		console.log(audioBlobs);
+		audioBlobs.forEach((oneMinuteBlob) => {
+		  const data = new FormData();
+		  data.append('file', oneMinuteBlob);
+		  data.append('model', 'whisper-1');
+		  sendAudioFile(data);
+		});
+		// clear audioBlobs after calling sendAudioFile
+		//setAudioBlobs([]);
+	  }, [audioBlobs]);
 
 
 	const splitAudioBlob = (audioBlob) => {
@@ -286,8 +302,9 @@ const UploadFileBox = (props) => {
 		setRecording(false);
 		 //stop the recording using the audio recording API
 		 audioRecorder.stop()
-		 .then(audioAsblob => {
-			splitAudioBlob(audioAsblob);
+		 .then(audioAsblob=> {
+			setAudioBlobs(audioAsblob);
+			//splitAudioBlob(audioAsblob);
 			/*var file = blobToFile(audioAsblob, "audio.wav");
 			const data = new FormData();
 			data.append('file', file);
@@ -375,6 +392,7 @@ const UploadFileBox = (props) => {
 	  };
 
 	  const sendAudioFile = async (dataFile) => {
+		console.log("bouta send audio file");
 		console.log(formData);
 		props.isLoading(true);
 		setLoading(true);

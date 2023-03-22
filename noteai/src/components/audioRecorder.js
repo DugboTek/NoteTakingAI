@@ -3,10 +3,14 @@
 var audioRecorder = {
     /** Stores the recorded audio as Blob objects of audio data as the recording continues*/
     audioBlobs: [],/*of type Blob[]*/
+
+    oneMinuteBlobs: [],
     /** Stores the reference of the MediaRecorder instance that handles the MediaStream when recording starts*/
     mediaRecorder: null, /*of type MediaRecorder*/
     /** Stores the reference to the stream currently capturing the audio*/
     streamBeingCaptured: null, /*of type MediaStream*/
+
+    recordingDuration: 0,
     /** Start recording the audio 
      * @returns {Promise} - returns a promise that resolves if audio recording successfully started
      */
@@ -41,6 +45,17 @@ var audioRecorder = {
                     audioRecorder.mediaRecorder.addEventListener("dataavailable", event => {
                         //store audio Blob object
                         audioRecorder.audioBlobs.push(event.data);
+                        audioRecorder.recordingDuration += event.data.duration;
+
+                        if (audioRecorder.recordingDuration >= 60) {
+                            audioRecorder.mediaRecorder.stop();
+                            let minuteBlob = new Blob(audioRecorder.audioBlobs, { 'type': 'audio/wav; codecs=0' });
+                            audioRecorder.oneMinuteBlobs.push(minuteBlob);
+                            audioRecorder.startRecorder();
+                            audioRecorder.audioBlobs = [];
+                            audioRecorder.recordingDuration = 0;
+                          }
+
                     });
 
                     //start the recording by calling the start method on the media recorder
@@ -50,6 +65,17 @@ var audioRecorder = {
             /* errors are not handled in the API because if its handled and the promise is chained, the .then after the catch will be executed*/
         }
     },
+
+    startRecorder: function () {
+        audioRecorder.mediaRecorder.start();
+      },
+    
+      // Extract the code to stop the recorder into a separate function
+      stopRecorder: function () {
+        audioRecorder.mediaRecorder.stop();
+      },
+
+
     /** Stop the started audio recording
      * @returns {Promise} - returns a promise that resolves to the audio as a blob file
      */
@@ -62,10 +88,10 @@ var audioRecorder = {
             //listen to the stop event in order to create & return a single Blob object
             audioRecorder.mediaRecorder.addEventListener("stop", () => {
                 //create a single blob object, as we might have gathered a few Blob objects that needs to be joined as one
-               let audioBlob = new Blob(audioRecorder.audioBlobs, { 'type' : 'audio/wav; codecs=0' });
-                
+             //  let audioBlob = new Blob(audioRecorder.audioBlobs, { 'type' : 'audio/wav; codecs=0' });
+               
                 //resolve promise with the single audio blob representing the recorded audio
-                resolve(audioBlob);
+                resolve(audioRecorder.oneMinuteBlobs);
             });
             audioRecorder.cancel();
         });
