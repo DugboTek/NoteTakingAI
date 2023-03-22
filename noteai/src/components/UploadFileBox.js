@@ -26,6 +26,7 @@ const UploadFileBox = (props) => {
 	const [formDataUpdated, setFormDataUpdated] = useState(false); //form data state flag
 	const [audioBlobs, setAudioBlobs] = useState([]); // state variable to store audio blobs
 	const [gptResponse, setGptResponse] = useState([]); // state variable to store gpt response
+	const [headings, setHeadings] = useState([]); // state variable to store headings
 
 	let record = false;
 
@@ -36,6 +37,26 @@ const UploadFileBox = (props) => {
 	const api_key = process.env.OPEN_AI_API_KEY;
 
 	//write 
+
+	function extractMarkdownHeadings(markdownString) {
+		const headings = [];
+		const lines = markdownString.split("\n");
+		
+		lines.forEach((line) => {
+		  const headingMatch = line.match(/^#+\s+(.*)/);
+		  
+		  if (headingMatch) {
+			headings.push(headingMatch[1].trim());
+		  }
+		});
+		
+		return headings.join("\n");
+	
+	}
+
+	const getHeadings = (text) => {
+		headings.push(extractMarkdownHeadings(text));
+	}
 
 	useEffect(() => {
 		if (formData && formDataUpdated) {
@@ -347,6 +368,14 @@ const UploadFileBox = (props) => {
 			body: JSON.stringify({userSubject}),
 		});
 
+		const respHead = await fetch('http://localhost:3001/noteHeadings', {
+			method : 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({headings}),
+		});
+
 		const response = await fetch('http://localhost:3001', {
 		  method: 'POST',
 		  headers: {
@@ -355,13 +384,15 @@ const UploadFileBox = (props) => {
 		  body: JSON.stringify({inputText}),
 		})
 		const data = await response.json();
+		gptResponse.push(data.message);
+		getHeadings(data.message);
 		//setResponse(data.message);
 		//setConvertedText(data.message);
 	
 		//props.onConvertedText(data.message);
-		//setLoading(false);
-		//props.isLoading(false);
-		//console.log(data.message);
+		setLoading(false);
+		props.isLoading(false);
+		console.log(data.message);
 
 
 

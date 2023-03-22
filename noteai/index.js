@@ -30,10 +30,26 @@ app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:500
 app.use(cors());
 
 var subject = '';
+var headings = '';
 
 function setSubject (inputSubject) {
 	subject = inputSubject;
 }
+
+function setHeadings(inputHeadings) {
+	inputHeadings.forEach(element => {
+		headings += element;
+	});
+}
+
+app.post('/noteHeadings', async (req, res) => {
+	
+	// Destructure the `message` property from the `req.body` object using curly braces
+	setSubject(req.body.headings);
+	console.log(req.body);
+	console.log("headings" + subject);
+	res.send({message: "note details received"});
+});
 
 
 app.post('/noteDetails', async (req, res) => {

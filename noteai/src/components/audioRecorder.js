@@ -69,7 +69,7 @@ var audioRecorder = {
                     });
     
                     // start the recording by calling the start method on the media recorder
-                    audioRecorder.mediaRecorder.start(60000);
+                    audioRecorder.mediaRecorder.start(60000*5);
                 });
     
             /* errors are not handled in the API because if its handled and the promise is chained, the .then after the catch will be executed*/
