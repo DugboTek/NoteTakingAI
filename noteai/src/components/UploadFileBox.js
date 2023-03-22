@@ -1,7 +1,7 @@
 //import react
 import React, { useState, useEffect } from 'react';
 import DropFileInput from './Drop-File-Input/DropFileInput';
-import { audioRecorder } from './audioRecorder.js';
+import { audioRecorder} from './audioRecorder.js';
 import recordIcon from '../assets/images/record-black.png';
 
 const OpenAI = require('openai');
@@ -25,6 +25,7 @@ const UploadFileBox = (props) => {
 	const [file, setFile] = useState(null);
 	const [formDataUpdated, setFormDataUpdated] = useState(false); //form data state flag
 	const [audioBlobs, setAudioBlobs] = useState([]); // state variable to store audio blobs
+	const [gptResponse, setGptResponse] = useState([]); // state variable to store gpt response
 
 	let record = false;
 
@@ -48,12 +49,15 @@ const UploadFileBox = (props) => {
 		// call sendAudioFile with each oneMinuteBlob produced by toggleAudioRecording
 		console.log("useEffect called one minute blob");
 		console.log(audioBlobs);
-		audioBlobs.forEach((oneMinuteBlob) => {
+		console.log(audioBlobs.length);
+
+		for(let i = 0; i < audioBlobs.length; i++){
+		  var file = blobToFile(audioBlobs[i], 'audio.wav');
 		  const data = new FormData();
-		  data.append('file', oneMinuteBlob);
+		  data.append('file', file);
 		  data.append('model', 'whisper-1');
 		  sendAudioFile(data);
-		});
+		}
 		// clear audioBlobs after calling sendAudioFile
 		//setAudioBlobs([]);
 	  }, [audioBlobs]);
@@ -351,13 +355,17 @@ const UploadFileBox = (props) => {
 		  body: JSON.stringify({inputText}),
 		})
 		const data = await response.json();
-		setResponse(data.message);
-		setConvertedText(data.message);
-	//	props.setConvertedText(data.message);
-		props.onConvertedText(data.message);
-		setLoading(false);
-		props.isLoading(false);
-		console.log(data.message);
+		//setResponse(data.message);
+		//setConvertedText(data.message);
+	
+		//props.onConvertedText(data.message);
+		//setLoading(false);
+		//props.isLoading(false);
+		//console.log(data.message);
+
+
+
+		//	props.setConvertedText(data.message);
 		/*.then(res => res.json())
 		.then((data) => setResponse(data.message))
 		.then((data) => setConvertedText(data.message))
@@ -393,7 +401,7 @@ const UploadFileBox = (props) => {
 
 	  const sendAudioFile = async (dataFile) => {
 		console.log("bouta send audio file");
-		console.log(formData);
+		console.log(dataFile);
 		props.isLoading(true);
 		setLoading(true);
 		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {

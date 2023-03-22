@@ -16,52 +16,62 @@ var audioRecorder = {
      */
     
     start: function () {
-        //Feature Detection
+        console.log("start");
+        // Feature Detection
         if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-            //Feature is not supported in browser
-            //return a custom error
+            // Feature is not supported in browser
+            // return a custom error
             return Promise.reject(new Error('mediaDevices API or getUserMedia method is not supported in this browser.'));
-        }
-
-        else {
-            //Feature is supported in browser
-
-            //create an audio stream
-            return navigator.mediaDevices.getUserMedia({ audio: true }/*of type MediaStreamConstraints*/)
-                //returns a promise that resolves to the audio stream
-                .then(stream /*of type MediaStream*/ => {
-
-                    //save the reference of the stream to be able to stop it when necessary
+        } else {
+            let startTime = null;
+            // Feature is supported in browser
+    
+            // create an audio stream
+            return navigator.mediaDevices.getUserMedia({ audio: true } /* of type MediaStreamConstraints */ )
+                // returns a promise that resolves to the audio stream
+                .then(stream /* of type MediaStream */ => {
+    
+                    // save the reference of the stream to be able to stop it when necessary
                     audioRecorder.streamBeingCaptured = stream;
-
-                    //create a media recorder instance by passing that stream into the MediaRecorder constructor
-                    audioRecorder.mediaRecorder = new MediaRecorder(stream); /*the MediaRecorder interface of the MediaStream Recording
-                    API provides functionality to easily record media*/
-
-                    //clear previously saved audio Blobs, if any
+    
+                    // create a media recorder instance by passing that stream into the MediaRecorder constructor
+                    audioRecorder.mediaRecorder = new MediaRecorder(stream); /* the MediaRecorder interface of the MediaStream Recording
+                    API provides functionality to easily record media */
+    
+                    // clear previously saved audio Blobs, if any
                     audioRecorder.audioBlobs = [];
+    
+                   
 
-                    //add a dataavailable event listener in order to store the audio data Blobs when recording
+                    // add a dataavailable event listener in order to store the audio data Blobs when recording
                     audioRecorder.mediaRecorder.addEventListener("dataavailable", event => {
-                        //store audio Blob object
+                        // store audio Blob object
                         audioRecorder.audioBlobs.push(event.data);
-                        audioRecorder.recordingDuration += event.data.duration;
-
+                       /* if (startTime === null) {
+                            startTime = Date.now();
+                            console.log("start time = now");
+                        } else {
+                            audioRecorder.recordingDuration = (Date.now() - startTime) / 1000;
+                            console.log("duration:");
+                            console.log(audioRecorder.recordingDuration);
+                        }
                         if (audioRecorder.recordingDuration >= 60) {
+                            console.log("one minute reached");
                             audioRecorder.mediaRecorder.stop();
                             let minuteBlob = new Blob(audioRecorder.audioBlobs, { 'type': 'audio/wav; codecs=0' });
                             audioRecorder.oneMinuteBlobs.push(minuteBlob);
                             audioRecorder.startRecorder();
                             audioRecorder.audioBlobs = [];
                             audioRecorder.recordingDuration = 0;
-                          }
-
+                            startTime = null;
+                        }*/
+    
                     });
-
-                    //start the recording by calling the start method on the media recorder
-                    audioRecorder.mediaRecorder.start();
+    
+                    // start the recording by calling the start method on the media recorder
+                    audioRecorder.mediaRecorder.start(60000);
                 });
-
+    
             /* errors are not handled in the API because if its handled and the promise is chained, the .then after the catch will be executed*/
         }
     },
@@ -91,7 +101,7 @@ var audioRecorder = {
              //  let audioBlob = new Blob(audioRecorder.audioBlobs, { 'type' : 'audio/wav; codecs=0' });
                
                 //resolve promise with the single audio blob representing the recorded audio
-                resolve(audioRecorder.oneMinuteBlobs);
+                resolve(audioRecorder.audioBlobs);
             });
             audioRecorder.cancel();
         });
