@@ -1,4 +1,11 @@
 //API to handle audio recording 
+import React, { useState, useEffect } from 'react';
+
+import UploadFileBox from "./UploadFileBox";
+
+import blobToFile from "./UploadFileBox";
+import sendAudioFile from "./UploadFileBox";
+
 
 var audioRecorder = {
     /** Stores the recorded audio as Blob objects of audio data as the recording continues*/
@@ -13,8 +20,11 @@ var audioRecorder = {
     recordingDuration: 0,
     /** Start recording the audio 
      * @returns {Promise} - returns a promise that resolves if audio recording successfully started
+     * 
+     * 
      */
-    
+
+
     start: function () {
         console.log("start");
         // Feature Detection
@@ -47,6 +57,12 @@ var audioRecorder = {
                     audioRecorder.mediaRecorder.addEventListener("dataavailable", event => {
                         // store audio Blob object
                         audioRecorder.audioBlobs.push(event.data);
+
+                        audioRecorder.mediaRecorder.stop();
+                        console.log("stop");
+                        audioRecorder.mediaRecorder.start();
+                        console.log("start");
+
                        /* if (startTime === null) {
                             startTime = Date.now();
                             console.log("start time = now");
@@ -69,7 +85,7 @@ var audioRecorder = {
                     });
     
                     // start the recording by calling the start method on the media recorder
-                    audioRecorder.mediaRecorder.start(60000*5);
+                    audioRecorder.mediaRecorder.start(60000);
                 });
     
             /* errors are not handled in the API because if its handled and the promise is chained, the .then after the catch will be executed*/

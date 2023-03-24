@@ -76,7 +76,7 @@ app.post('/', async (req, res) => {
 		messages: [
 					{role: "system","content": "You are a helpful note generating robot that generates notes on important topics or details given an audio transcription."},
 					{role: "user","content": "This is the class subject that the audio recording is about:" + `${subject}`+"use your prior knowlege on the topic to supplement the notes you generate. the title of the note should be Notes on: " + `${subject}`},
-					{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details. You will return the output in markdown format, for the header use ## for the Header and ### for subheaders, bold using *** and italisize words that are important in the transcript and provide bulleted-list with indented items of important vocabulary and defintions. add block quotes using > and add in the quote from the transcript where each note is generated. after every new line create an aditional new line character."},
+					{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details. You will return the output in markdown format, for the header use ## for the Header and ### for subheaders, bold using *** and italisize words that are important in the transcript and provide bulleted-list with indented items. after every new line create an aditional new line character."},
 					{role: "user", "content": `${JSON.stringify(req.body)}`}
 				],
 		max_tokens: 3000,

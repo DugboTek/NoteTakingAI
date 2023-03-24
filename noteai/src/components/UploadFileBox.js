@@ -384,14 +384,14 @@ const UploadFileBox = (props) => {
 		  body: JSON.stringify({inputText}),
 		})
 		const data = await response.json();
-		gptResponse.push(data.message);
-		getHeadings(data.message);
+		//gptResponse.push(data.message);
+		//getHeadings(data.message);
 		//setResponse(data.message);
 		//setConvertedText(data.message);
 	
 		//props.onConvertedText(data.message);
-		setLoading(false);
-		props.isLoading(false);
+		//setLoading(false);
+		//props.isLoading(false);
 		console.log(data.message);
 
 
@@ -433,8 +433,8 @@ const UploadFileBox = (props) => {
 	  const sendAudioFile = async (dataFile) => {
 		console.log("bouta send audio file");
 		console.log(dataFile);
-		props.isLoading(true);
-		setLoading(true);
+		//props.isLoading(true);
+		//setLoading(true);
 		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
 		  headers: {
 			"Authorization": `Bearer ${key}`
@@ -445,8 +445,8 @@ const UploadFileBox = (props) => {
 		console.log("audio sent");
 		const data = await res.json();
 		console.log(data);
-		//setConvertedText(data.text);
-		//props.onConvertedText(data.text);
+		setConvertedText(data.text);
+		props.onConvertedText(data.text);
 		//setUserSubject("Computer Networks");
 		console.log("userSubject in send audio");
 		console.log(userSubject);
