@@ -55,32 +55,25 @@ var audioRecorder = {
 
                     // add a dataavailable event listener in order to store the audio data Blobs when recording
                     audioRecorder.mediaRecorder.addEventListener("dataavailable", event => {
+                        console.log("dataavailable");
                         // store audio Blob object
                         audioRecorder.audioBlobs.push(event.data);
 
-                        audioRecorder.mediaRecorder.stop();
-                        console.log("stop");
-                        audioRecorder.mediaRecorder.start();
-                        console.log("start");
-
-                       /* if (startTime === null) {
-                            startTime = Date.now();
-                            console.log("start time = now");
-                        } else {
-                            audioRecorder.recordingDuration = (Date.now() - startTime) / 1000;
-                            console.log("duration:");
-                            console.log(audioRecorder.recordingDuration);
-                        }
-                        if (audioRecorder.recordingDuration >= 60) {
-                            console.log("one minute reached");
-                            audioRecorder.mediaRecorder.stop();
-                            let minuteBlob = new Blob(audioRecorder.audioBlobs, { 'type': 'audio/wav; codecs=0' });
-                            audioRecorder.oneMinuteBlobs.push(minuteBlob);
+                        if (audioRecorder.recordingDuration % 60000 === 0) {
+                            console.log("one minute");
+                            audioRecorder.stopRecorder();
+                            console.log("restarting Recorder");
                             audioRecorder.startRecorder();
-                            audioRecorder.audioBlobs = [];
-                            audioRecorder.recordingDuration = 0;
-                            startTime = null;
-                        }*/
+                            console.log("got here");
+                        }
+    
+                        // increment the recording duration by the dataavailable event interval
+                        audioRecorder.recordingDuration += event.timeStamp - startTime;
+    
+                        // set the start time for the next interval
+                        startTime = event.timeStamp;
+
+                        
     
                     });
     
@@ -118,10 +111,30 @@ var audioRecorder = {
                
                 //resolve promise with the single audio blob representing the recorded audio
                 resolve(audioRecorder.audioBlobs);
+                console.log("resolving audioBlobs");
             });
-            audioRecorder.cancel();
+           // audioRecorder.cancel();
         });
     },
+
+    cancelStop: function () {
+        return new Promise(resolve => {
+            //save audio type to pass to set the Blob type
+            let mimeType = audioRecorder.mediaRecorder.mimeType;
+
+            //listen to the stop event in order to create & return a single Blob object
+            audioRecorder.mediaRecorder.addEventListener("stop", () => {
+                //create a single blob object, as we might have gathered a few Blob objects that needs to be joined as one
+             //  let audioBlob = new Blob(audioRecorder.audioBlobs, { 'type' : 'audio/wav; codecs=0' });
+               
+                //resolve promise with the single audio blob representing the recorded audio
+                resolve(audioRecorder.audioBlobs);
+                console.log("resolving audioBlobs");
+            });
+           audioRecorder.cancel();
+        });
+
+        },
     /** Cancel audio recording*/
     cancel: function () {
         //stop the recording feature
