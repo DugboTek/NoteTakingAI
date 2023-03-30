@@ -29,6 +29,8 @@ const UploadFileBox = (props) => {
 
 	const api_key = process.env.OPEN_AI_API_KEY;
 
+	const websocket = new WebSocket('wss://www.scribb.ai:3001/ws');
+
 	//write 
 
 	const blobToFile = (theBlob, fileName) => {

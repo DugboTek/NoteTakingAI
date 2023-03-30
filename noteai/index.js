@@ -1,5 +1,6 @@
 const OpenAI = require('openai');
 const {Configuration, OpenAIApi} = OpenAI;
+
 //const response = await openai.listEngines();
 
 // a express server, which will handle api requests coming in and respond back witha json object, it will use body-parser aswel as cross
@@ -7,9 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
-const port = 3001;
-
-
+const port = 3000;
 
 
 
