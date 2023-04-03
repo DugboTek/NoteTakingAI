@@ -387,9 +387,31 @@ form{
   border-radius: 50%;
   border-color: var(--text-second-color);
   background-color: var(--body-bg);
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 }
 
-.record-button:hover {
+.record-button-recording {
+  height: 8em;
+  width: 8em;
+  border-radius: 50%;
+  border-color: var(--text-second-color);
+  background-color: var(--body-bg);
+  box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+  }
   
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+  
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
 }

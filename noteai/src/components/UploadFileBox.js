@@ -214,7 +214,7 @@ const UploadFileBox = (props) => {
 	return(
 		<div className="box--upload">
 			<div className ="microphone-box">
-				<button className="record-button" onClick={toggleAudioRecording}>
+				<button className={`record-button${recording ? '-recording' : ''}`} onClick={toggleAudioRecording}>
 				<img src={recordIcon} className="record-icon" alt= "recording button"/>
 				</button>
 			</div>
