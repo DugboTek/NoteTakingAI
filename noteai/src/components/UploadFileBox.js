@@ -21,6 +21,8 @@ const UploadFileBox = (props) => {
 	const [message, setMessage] = useState('');
 	const [recording, setRecording] = useState(false);
 	const [response, setResponse] = useState('');
+	const [old, setOld] = useState([]);
+
 	const [userSubject, setUserSubject] = useState("");
 	const [file, setFile] = useState(null);
 	var recordingNotStopped; // User pressed record button and keep talking, still not stop button pressed
@@ -147,11 +149,14 @@ const UploadFileBox = (props) => {
 		  },
 		  body: JSON.stringify({inputText}),
 		})
-		const data = await response.json();
-		setResponse(data.message);
+		const data = await response.json();//hi+old
+		const newMessage = data.message;
+		setOld((prevMessages) => [...prevMessages, newMessage]);
+		const allMessages = old.concat(newMessage).join("\n");
 		setConvertedText(data.message);
 	//	props.setConvertedText(data.message);
-		props.onConvertedText(data.message);
+		props.onConvertedText(allMessages);
+		//setOld(convertedText);
 		setLoading(false);
 		props.isLoading(false);
 		console.log(data.message);

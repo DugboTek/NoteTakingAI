@@ -101,7 +101,8 @@ button:active {
 }
 
 .output-format{
-  overflow-x: visible;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .justify-content-center{
