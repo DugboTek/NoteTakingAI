@@ -74,9 +74,9 @@ app.post('/', async (req, res) => {
 
 });
 
-const privateKey = fs.readFileSync('scribb.ai.key', 'utf8');
-const certificate = fs.readFileSync('scribb_ai.crt', 'utf8');
-const ca = fs.readFileSync('intermediate.crt', 'utf8');
+const privateKey = fs.readFileSync('/root/scribb.ai.key', 'utf8');
+const certificate = fs.readFileSync('/root/scribb_ai.crt', 'utf8');
+const ca = fs.readFileSync('/root/intermediate.crt', 'utf8');
 
 const credentials = { key: privateKey, cert: certificate, ca: ca };
 
