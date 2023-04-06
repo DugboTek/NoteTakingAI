@@ -134,7 +134,7 @@ const UploadFileBox = (props) => {
 	
 	const handleSubmit = async (inputText) => {
 		//gets the subject from the user
-		const resp = await fetch('http://localhost:3001/noteDetails', {
+		const resp = await fetch('https://scribb.ai:3001/noteDetails', {
 			method : 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -142,7 +142,7 @@ const UploadFileBox = (props) => {
 			body: JSON.stringify({userSubject}),
 		});
 
-		const response = await fetch('http://localhost:3001', {
+		const response = await fetch('https://scribb.ai:3001', {
 		  method: 'POST',
 		  headers: {
 			'Content-Type': 'application/json'
@@ -168,30 +168,7 @@ const UploadFileBox = (props) => {
 
 	  };
 
-	  
-	/*const handleFile = async(e) =>{
-  
-		if (e.target.files && e.target.files[0]) 
-		{
-		  const file = e.target.files[0];
-		  const data = new FormData();~
-		  data.append("file", file);
-		  data.append("model", "whisper-1");
-		  setFormData(data);
-		  console.log("File Uploaded");
-		  console.log(data);
-		  setHasFile(true); // set the flag to true
-		  if (file.size > 25 * 1024 * 1024) 
-		  {
-			alert("Please upload an audio file less than 25MB");
-			console.log("Please upload an audio file less than 25MB");
-	  
-			setHasFile(false); // reset the flag if the file is too big
-			return;
-		  }
-		}
-	}*/
-
+	
 	
 
 	const sendAudio = async () => {
