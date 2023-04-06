@@ -2,13 +2,11 @@ module.exports = {
 	apps: [
 	  {
 		name: 'scribb-client',
-		script: 'src/index.js',
-		args: '--experimental-modules',
-		instances: 'max',
-		exec_mode: 'cluster',
-		watch: true,
+		script: 'serve',
 		env: {
-		  NODE_ENV: 'production',
+		  PM2_SERVE_PATH: './build',
+		  PM2_SERVE_PORT: 3000,
+		  PM2_SERVE_SPA: 'true',
 		},
 	  },
 	],
