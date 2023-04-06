@@ -9,7 +9,6 @@ const https = require('https');
 const fs = require('fs');
 const port = 3001;
 
-const credentials = { key: privateKey, cert: certificate, ca: ca };
 
 const configuration = new Configuration({
     organization: "org-z6irWsTc2C2dIvnVg5TEG2gE",
@@ -78,6 +77,9 @@ app.post('/', async (req, res) => {
 const privateKey = fs.readFileSync('scribb.ai.key', 'utf8');
 const certificate = fs.readFileSync('scribb_ai.crt', 'utf8');
 const ca = fs.readFileSync('intermediate.crt', 'utf8');
+
+const credentials = { key: privateKey, cert: certificate, ca: ca };
+
 
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(port, '0.0.0.0', () => {
