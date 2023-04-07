@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DropFileInput from './Drop-File-Input/DropFileInput';
-import { audioRecorder } from './audioRecorder.js';
 import recordIcon from '../assets/images/record-black.png';
+import { WebVoiceProcessor } from '@picovoice/web-voice-processor';
+import lamejs from 'lamejstmp';
 
 const OpenAI = require('openai');
 const { Configuration, OpenAIApi } = OpenAI;
@@ -20,6 +21,7 @@ const UploadFileBox = (props) => {
   const [old, setOld] = useState([]);
   const [userSubject, setUserSubject] = useState("");
   const [file, setFile] = useState(null);
+  const [recordedChunks, setRecordedChunks] = useState([]);
   const trackLengthInMS = 1000; // Length of audio chunk in miliseconds
   const maxNumOfSecs = 1000; // Number of mili seconds we support per recording (1 second)
 
@@ -36,86 +38,72 @@ const UploadFileBox = (props) => {
 
   const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
- /* const asyncFn = async (recording) => {
-    for (let i = 0; i < maxNumOfSecs; i++) {
-     // console.log("asyncFn loop iteration ", i);
-      if (recording) {
-        toggleAudioRecording(true);
-        await sleep(trackLengthInMS);
-        toggleAudioRecording(false);
-      }
-    }
-  }*/
-  
+  const maxFileSize = 25 * 1024 * 1024; // 25 MB
+let mp3Encoder;
 
-  const toggleAudioRecording = async () => {
-	if (recording) {
-	  // Stop the recording and get the recorded audio Blob as an MP3 file
-	  try {
-		let audioAsblob = await audioRecorder.stop();
-		var file = blobToFile(audioAsblob, "audio.mp3");
-		const data = new FormData();
-		data.append('file', file);
-		data.append('model', 'whisper-1');
-		setFormData(data);
-		console.log("formData" + formData);
-	  } catch (error) {
-		// Error handling structure
-		switch (error.name) {
-		  case 'InvalidStateError': // Error from the MediaRecorder.stop
-			console.log("An InvalidStateError has occured.");
-			break;
-		  default:
-			console.log("An error occured while stopping the recorder with the error name " + error.name);
-		};
-	  } finally {
-		setRecording(false);
-	  }
-	} else {
-	  setRecording(true);
-	  // Start recording using the audio recording API
-	  try {
-		console.log("Recording Audio...");
-		await audioRecorder.start();
-	  } catch (error) {
-		// Error handling structure
-		switch (error.name) {
-		  case 'AbortError': // Error from navigator.mediaDevices.getUserMedia
-			console.log("An AbortError has occured.");
-			break;
-		  case 'NotAllowedError': // Error from navigator.mediaDevices.getUserMedia
-			console.log("A NotAllowedError has occured. User might have denied permission.");
-			break;
-		  case 'NotFoundError': // Error from navigator.mediaDevices.getUserMedia
-			console.log("A NotFoundError has occured.");
-			break;
-		  case 'NotReadableError': // Error from navigator.mediaDevices.getUserMedia
-			console.log("A NotReadableError has occured.");
-			break;
-		  case 'SecurityError': // Error from navigator.mediaDevices.getUserMedia or from the MediaRecorder.start
-			console.log("A SecurityError has occured.");
-			break;
-		  case 'TypeError': // Error from navigator.mediaDevices.getUserMedia
-			console.log("A TypeError has occured.");
-			break;
-		  case 'InvalidStateError': // Error from the MediaRecorder.start
-			console.log("An InvalidStateError has occured.");
-			break;
-		  case 'UnknownError': // Error from the MediaRecorder.start
-			console.log("An UnknownError has occured.");
-			break;
-		  default:
-			console.log("An error occured while starting the recorder with the error name " + error.name);
-		};
-		setRecording(false);
+const webVoiceProcessor = new WebVoiceProcessor({
+	context: "browsers",
+	frameLength: 512,
+	sampleRate: 16000
+  });
+
+const processAudioData = async (inputFrame) => {
+	const mp3Data = mp3Encoder.encodeBuffer(inputFrame);
+	if (mp3Data.length > 0) {
+		setRecordedChunks(prevChunks => [...prevChunks, mp3Data]);
+	}
+  
+	if (recordedChunks.length * Uint8Array.BYTES_PER_ELEMENT > maxFileSize) {
+	  // Stop the recording
+	  await WebVoiceProcessor.unsubscribe(audioProcessor);
+	  // Send the audio and reset recordedChunks
+	  await sendAudio();
+	  setRecordedChunks = [];
+	  // Start a new recording session
+	  if (recording) {
+		await WebVoiceProcessor.subscribe(audioProcessor);
 	  }
 	}
   };
   
+
+const audioProcessor = {
+    onmessage: (e) => {
+      processAudioData(e.data.inputFrame);
+    },
+  };
+
+  const toggleAudioRecording = async () => {
+    if (recording) {
+      // Stop the recording and get the recorded audio Blob as an MP3 file
+      try {
+		console.log('ubsubscribeing...');
+        await WebVoiceProcessor.unsubscribe(audioProcessor);
+		console.log(recordedChunks);
+        sendAudio();
+      } catch (error) {
+        console.error("An error occurred while stopping the recorder: ", error);
+      } finally {
+        setRecording(false);
+		console.log('stopping recording...');
+      }
+    } else {
+      setRecording(true);
+
+      // Initialize the MP3 encoder
+      mp3Encoder = new lamejs.Mp3Encoder(1, 16000, 128);
+
+      // Start recording using the Web Voice Processor
+      try {
+        console.log("Recording Audio...");
+        await WebVoiceProcessor.subscribe(audioProcessor);
+      } catch (error) {
+        console.error("An error occurred while starting the recorder: ", error);
+        setRecording(false);
+      }
+    }
+  };
   
-  
-	
-	
 	const handleSubmit = async (inputText) => {
 		//gets the subject from the user
 		const resp = await fetch('https://scribb.ai:3001/noteDetails', {
@@ -157,40 +145,41 @@ const UploadFileBox = (props) => {
 
 	  const sendAudio = async () => {
 		try {
-			props.isLoading(true);
-			setLoading(true);
-			// Stop recording and get the recorded audio Blob as an MP3 file
-			let audioBlob = await audioRecorder.combineAndEncodeAudioBlobs('audio/mp3');
-			let file = new File([audioBlob], 'audio.mp3');
-			// Create a FormData instance to send the file and model information
-			let data = new FormData();
-			data.append('file', file);
-			data.append('model', 'whisper-1');
-			// Send the audio file to the API for transcription
-			let res = await fetch('https://api.openai.com/v1/audio/transcriptions', {
-				headers: {
-					Authorization: `Bearer ${key}`,
-				},
-				method: 'POST',
-				body: data,
-			});
-			let responseJson = await res.json();
-			console.log(responseJson);
-			// Set the converted text and user subject in the parent component
-			setConvertedText(responseJson.text);
-			props.onConvertedText(responseJson.text);
-			setUserSubject('Computer Networks');
-			console.log('userSubject in send audio');
-			console.log(userSubject);
-			// Handle the form submit with the converted text
-			handleSubmit(responseJson.text);
+		  props.isLoading(true);
+		  setLoading(true);
+		  // Stop recording and get the recorded audio Blob as an MP3 file
+		  const audioBlob = new Blob(recordedChunks, { type: 'audio/mpeg' });
+		  let file = new File([audioBlob], 'audio.mpeg');
+		  // Create a FormData instance to send the file and model information
+		  let data = new FormData();
+		  data.append('file', file);
+		  data.append('model', 'whisper-1');
+		  // Send the audio file to the API for transcription
+		  let res = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+			headers: {
+			  Authorization: `Bearer ${key}`,
+			},
+			method: 'POST',
+			body: data,
+		  });
+		  let responseJson = await res.json();
+		  console.log(responseJson);
+		  // Set the converted text and user subject in the parent component
+		 // setConvertedText(responseJson.text);
+		 // props.onConvertedText(responseJson.text);
+		 // setUserSubject('Computer Networks');
+		  console.log('userSubject in send audio');
+		  console.log(userSubject);
+		  // Handle the form submit with the converted text
+		  handleSubmit(responseJson.text);
 		} catch (error) {
-			console.error(error);
+		  console.error(error);
 		} finally {
-			setLoading(false);
-			props.isLoading(false);
+		  setLoading(false);
+		  props.isLoading(false);
 		}
-	};
+	  };
+	  
 	
 
 	return(
