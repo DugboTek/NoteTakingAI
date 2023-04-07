@@ -1,104 +1,182 @@
-//API to handle audio recording 
+const audioEncoder = require('audio-encoder');
+const resample = require('audio-resampler');
+const lamejs = require('lamejs');
+const fileSaver = require('file-saver');
 
-var audioRecorder = {
-    /** Stores the recorded audio as Blob objects of audio data as the recording continues*/
-    audioBlobs: [],/*of type Blob[]*/
-    /** Stores the reference of the MediaRecorder instance that handles the MediaStream when recording starts*/
-    mediaRecorder: null, /*of type MediaRecorder*/
-    /** Stores the reference to the stream currently capturing the audio*/
-    streamBeingCaptured: null, /*of type MediaStream*/
-    /** Start recording the audio 
-     * @returns {Promise} - returns a promise that resolves if audio recording successfully started
-     */
-    
+const audioRecorder = {
+    // Array of recorded audio blobs
+    audioBlobs: [],
+    // MediaRecorder instance for recording audio
+    mediaRecorder: null,
+    // MediaStream instance for capturing audio
+    streamBeingCaptured: null,
+
     start: function () {
-        //Feature Detection
-        if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-            //Feature is not supported in browser
-            //return a custom error
-            return Promise.reject(new Error('mediaDevices API or getUserMedia method is not supported in this browser.'));
+        // Check if getUserMedia is supported in the browser
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            return Promise.reject(new Error('getUserMedia is not supported in this browser.'));
         }
 
-        else {
-            //Feature is supported in browser
+        // Get the audio stream from the microphone
+        return navigator.mediaDevices.getUserMedia({
+            audio: {
+                sampleRate: 44100,
+            },
+        })
+        .then((stream) => {
+            // Save the reference to the captured stream
+            this.streamBeingCaptured = stream;
 
-            //create an audio stream
-            return navigator.mediaDevices.getUserMedia({ audio: true }/*of type MediaStreamConstraints*/)
-                //returns a promise that resolves to the audio stream
-                .then(stream /*of type MediaStream*/ => {
+            // Detect the MIME type
+            let mimeType;
+            if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+                mimeType = 'audio/webm;codecs=opus';
+            } else if (MediaRecorder.isTypeSupported('audio/mp4;codecs=mp4a.40.5')) {
+                mimeType = 'audio/mp4;codecs=mp4a.40.5';
+            } else {
+                // Add more MIME types if necessary or throw an error if none are supported.
+                throw new Error('No supported MIME types found for MediaRecorder.');
+            }
 
-                    //save the reference of the stream to be able to stop it when necessary
-                    audioRecorder.streamBeingCaptured = stream;
+            // Create a MediaRecorder instance
+            this.mediaRecorder = new MediaRecorder(stream, { mimeType });
+            // Reset the recorded audio blobs
+            this.audioBlobs = [];
 
-                    //create a media recorder instance by passing that stream into the MediaRecorder constructor
-                    audioRecorder.mediaRecorder = new MediaRecorder(stream); /*the MediaRecorder interface of the MediaStream Recording
-                    API provides functionality to easily record media*/
-
-                    //clear previously saved audio Blobs, if any
-                    audioRecorder.audioBlobs = [];
-
-                    //add a dataavailable event listener in order to store the audio data Blobs when recording
-                    audioRecorder.mediaRecorder.addEventListener("dataavailable", event => {
-                        //store audio Blob object
-                        audioRecorder.audioBlobs.push(event.data);
-                    });
-
-                    //start the recording by calling the start method on the media recorder
-                    audioRecorder.mediaRecorder.start();
-                });
-
-            /* errors are not handled in the API because if its handled and the promise is chained, the .then after the catch will be executed*/
-        }
-    },
-    /** Stop the started audio recording
-     * @returns {Promise} - returns a promise that resolves to the audio as a blob file
-     */
-    stop: function () {
-        //return a promise that would return the blob or URL of the recording
-        return new Promise(resolve => {
-            //save audio type to pass to set the Blob type
-            let mimeType = audioRecorder.mediaRecorder.mimeType;
-
-            //listen to the stop event in order to create & return a single Blob object
-            audioRecorder.mediaRecorder.addEventListener("stop", () => {
-                //create a single blob object, as we might have gathered a few Blob objects that needs to be joined as one
-               let audioBlob = new Blob(audioRecorder.audioBlobs, { 'type' : 'audio/wav; codecs=0' });
-                
-                //resolve promise with the single audio blob representing the recorded audio
-                resolve(audioBlob);
+            // Save the audio data as Blob objects when recording
+            this.mediaRecorder.addEventListener('dataavailable', (event) => {
+                this.audioBlobs.push(event.data);
             });
-            audioRecorder.cancel();
+
+            // Start recording
+            this.mediaRecorder.start(1000);
         });
     },
-    /** Cancel audio recording*/
+    
+
+    stop: async function () {
+        return new Promise((resolve, reject) => {
+            try {
+                // Check if a MediaRecorder instance exists
+                if (!this.mediaRecorder) {
+                    reject(new Error('No media recorder found.'));
+                    return;
+                }
+    
+                // Get the MIME type before stopping the recorder
+                const mimeType = this.mediaRecorder.mimeType;
+    
+                // Stop recording
+                this.cancel();
+    
+                console.log('MIME type:', mimeType);
+                this.combineAndEncodeAudioBlobs(mimeType)
+                    .then((mp3Blob) => {
+                        console.log('Encoded MP3 blob:', mp3Blob);
+                        resolve(mp3Blob);
+                    })
+                    .catch((error) => {
+                        console.log('Error in combineAndEncodeAudioBlobs:', error);
+                        reject(new Error(`Error in combineAndEncodeAudioBlobs: ${error.message}`));
+                    });
+            } catch (error) {
+                console.log('Error in stop method:', error);
+                reject(new Error(`Error in stop method: ${error.message}`));
+            }
+        });
+    },
+    
+    
+    
+    
     cancel: function () {
-        //stop the recording feature
-        audioRecorder.mediaRecorder.stop();
-
-        //stop all the tracks on the active stream in order to stop the stream
-        audioRecorder.stopStream();
-
-        //reset API properties for next recording
-        audioRecorder.resetRecordingProperties();
+        if (this.mediaRecorder) {
+            // Stop the MediaRecorder instance
+            this.mediaRecorder.stop();
+            // Stop the MediaStream tracks
+            this.stopStream();
+            // Reset the recording properties
+            this.resetRecordingProperties();
+        }
     },
-    /** Stop all the tracks on the active stream in order to stop the stream and remove
-     * the red flashing dot showing in the tab
-     */
+
     stopStream: function () {
-        //stopping the capturing request by stopping all the tracks on the active stream
-        audioRecorder.streamBeingCaptured.getTracks() //get all tracks from the stream
-            .forEach(track /*of type MediaStreamTrack*/ => track.stop()); //stop each one
+        if (this.streamBeingCaptured) {
+            // Stop all tracks in the MediaStream
+            this.streamBeingCaptured.getTracks().forEach((track) => {
+                track.stop();
+            });
+        }
     },
-    /** Reset all the recording properties including the media recorder and stream being captured*/
+
     resetRecordingProperties: function () {
-        audioRecorder.mediaRecorder = null;
-        audioRecorder.streamBeingCaptured = null;
+        // Reset the MediaRecorder and MediaStream instances
+        this.mediaRecorder = null;
+        this.streamBeingCaptured = null;
+    },
 
-        /*No need to remove event listeners attached to mediaRecorder as
-        If a DOM element which is removed is reference-free (no references pointing to it), the element itself is picked
-        up by the garbage collector as well as any event handlers/listeners associated with it.
-        getEventListeners(audioRecorder.mediaRecorder) will return an empty array of events.*/
-    }
-}
+    combineAndEncodeAudioBlobs: async function (mimeType) {
+        if (!this.audioBlobs) {
+          throw new Error('No audio blobs found.');
+        }
+        console.log('Audio blobs:', this.audioBlobs);
+        const audioBlob = new Blob(this.audioBlobs, { type: mimeType });
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(audioBlob);
+        return new Promise((resolve, reject) => {
+          reader.onloadend = async () => {
+            const arrayBuffer = reader.result;
+            const audioContext = new AudioContext();
+            const originalAudioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      
+            // Resample the audio to 44.1 kHz
+            resample(
+              originalAudioBuffer,
+              44100, // Target sample rate
+              (resampledAudioBuffer) => {
+                if (resampledAudioBuffer) { // Add check here
+                  // Encode the resampled audio as MP3
+                  const resampledAudio = new Float32Array(
+                    resampledAudioBuffer.getChannelData(0)
+                  );
+      
+                  const mp3encoder = new lamejs.Mp3Encoder(
+                    1, // number of channels
+                    44100, // sample rate
+                    128 // bit rate
+                  );
+      
+                  const mp3Data = [];
+                  const samples = resampledAudio;
+                  const mp3buf = mp3encoder.encodeBuffer(samples);
+                  if (mp3buf.length > 0) {
+                    mp3Data.push(mp3buf);
+                  }
+                  const mp3buf_last = mp3encoder.flush();
+                  if (mp3buf_last.length > 0) {
+                    mp3Data.push(mp3buf_last);
+                  }
+      
+                  const mp3Blob = new Blob(mp3Data, {
+                    type: 'audio/mpeg',
+                  });
+      
+                  resolve(mp3Blob);
+                } else {
+                  reject(new Error('Resampled audio buffer is null or undefined'));
+                }
+              }
+            );
+          };
+                    
+          reader.onerror = (event) => {
+            console.log('Error reading audioBlob:', event);
+            reject(event);
+          };
+        });
+      },
+      
+      
+};
 
-export{audioRecorder};
+export { audioRecorder };
