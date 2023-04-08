@@ -30,6 +30,10 @@
 	min-height: 90vh;
   }
 
+  .text-area div{
+	font-size: 1.5rem;
+  }
+
   
   .text-area .headerb {
 	padding-bottom: 1rem;
@@ -46,11 +50,6 @@
 	line-height: 1.1;
   }
   
-  .text-area div {
-	font-size: 1.5rem;
-	line-height: 2rem;
-	text-align: justify;
-  }
 
   .results-card{
 	display: flex;
@@ -66,6 +65,10 @@
 }
   
   @media (min-width: 768px) {
+
+	.boxdefualt{
+		padding: 5px;
+	}
 	.boxarea {
 	  flex-direction: column;
 	}
@@ -82,7 +85,13 @@
 	}
 
 	
+  }
 
-
+  @media (max-width: 450px) {
+  
+	.text-area div {
+	  font-size: 1rem; /* Adjust the font size for smaller screens */
+	  line-height: 1.1rem;
+	}
   }
   

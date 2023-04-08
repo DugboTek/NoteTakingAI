@@ -69,7 +69,7 @@ const getData = (textdata) => {
 
   return (
     <div className="App">
-      <h1>Scribb</h1>
+      <h1>Scribb<span class="subscript">ALPHA</span></h1>
       
       <div className="content-box">
         <div className="header-area">

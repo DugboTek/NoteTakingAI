@@ -38,7 +38,7 @@ const UploadFileBox = (props) => {
 
   const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
-  const maxFileSize = 25 * 1024 * 1024; // 25 MB
+  const maxFileSize = 24 * 1024 * 1024; // 25 MB
 let mp3Encoder;
 
 const webVoiceProcessor = new WebVoiceProcessor({
@@ -52,15 +52,21 @@ const processAudioData = async (inputFrame) => {
 	if (mp3Data.length > 0) {
 		setRecordedChunks(prevChunks => [...prevChunks, mp3Data]);
 	}
+	let filesize = recordedChunks.length * Uint8Array.BYTES_PER_ELEMENT;
+	if(filesize %5 == 0){
+		console.log(filesize);
+	}
   
 	if (recordedChunks.length * Uint8Array.BYTES_PER_ELEMENT > maxFileSize) {
+		console.log("Max file size reached. Stopping recording.");
 	  // Stop the recording
 	  await WebVoiceProcessor.unsubscribe(audioProcessor);
 	  // Send the audio and reset recordedChunks
 	  await sendAudio();
-	  setRecordedChunks = [];
+	  setRecordedChunks([]);
 	  // Start a new recording session
 	  if (recording) {
+		console.log("restarting recording...");
 		await WebVoiceProcessor.subscribe(audioProcessor);
 	  }
 	}

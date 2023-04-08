@@ -381,7 +381,13 @@ form{
 .text-input:focus::placeholder{
   opacity: 0;
 }
-
+.subscript {
+  background-color: red;
+  color: white;
+  font-size: 0.4em;
+  padding: 0.1em 0.4em;
+  vertical-align: sub;
+}
 .record-button {
   height: 8em;
   width: 8em;
@@ -416,3 +422,56 @@ form{
     box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
   }
 }
+
+@media only screen and (max-width: 490px) {
+  .box-body {
+    flex-direction: column;
+  }
+  .ant-btn{
+    margin-top: 1rem; 
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    padding-top: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+
+  .content-box {
+    grid-template-areas:
+      "header"
+      "right-rail"
+      "left-rail";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 0;
+    padding: 0.5rem;
+  }
+
+  .header {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .boxdefault{
+    padding: 5px;
+  }
+
+  .boxdefault, .content-box, .box--upload {
+    margin: 5px;
+  }
+
+  .mr4 {
+    margin-right: 0.5rem;
+  }
+
+  .record-button, .record-button-recording {
+    height: 6em;
+    width: 6em;
+  }
+}
+
+
