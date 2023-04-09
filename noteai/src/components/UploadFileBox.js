@@ -34,7 +34,7 @@ const UploadFileBox = (props) => {
   const maxNumOfSecs = 1000; // Number of mili seconds we support per recording (1 second)
 
   const api_key = process.env.OPEN_AI_API_KEY;
-  const TIMEOUT_MS = 1000 * 60 * 1; // 5 minutes
+  const TIMEOUT_MS = 1000 * 60 * 5; // 5 minutes
 
   const blobToFile = (theBlob, fileName) => {
     const b = theBlob;
@@ -266,11 +266,13 @@ const audioProcessor = {
 	return(
 		<div className="box--upload">
 			<div className="micContainer">
+			<div className = "micdotContainer">
 			<div className ="microphone-box">
 				<button className={`record-button${recording ? '-recording' : ''}`} onClick={toggleAudioRecording}>
 				<img src={recordIcon} className="record-icon" alt= "recording button"/>
 				</button>
-				<div className="indicator"></div>
+			</div>
+			<div className={`indicator${recording ? '-recording' : ''}`}></div>
 			</div>
 			<div className="instructions">
 				<b>Press the button</b>

@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
 
 :root{
-  --body-bg: #f5f8ff;
+  --body-bg: #F3F3F3;
   --box-bg: #f5f8ff;
   --box-bg-dark: #F3F3F3;
   --input-bg: #f5f8ff;
@@ -472,11 +472,9 @@ form{
   width: 8em;
   border-radius: 50%;
   border-style: none;
-  background-color: var(--body-bg);
+  background-color: var(--box-bg);
   outline: none;
-  box-shadow: 0 0 0 0 rgba(221, 236, 250, 0.667) ;
-  animation: pulse-white 2s infinite;
-  
+  box-shadow: 0 0 0 0 rgba(221, 236, 250, 0.667) ;  
 }
 .micContainer {
   display: flex;
@@ -570,6 +568,11 @@ form{
   opacity: 1;
 }
 
+.microphone-box{
+  margin-left: 40px;
+}
+
+
 
 .tab span {
   font-size: 16px;
@@ -581,7 +584,30 @@ form{
   font-weight: 600;
 }
 
-.indicator
+.micdotContainer{
+  display: flex;
+  flex-direction: row;
+}
+
+.indicator{
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: rgb(187, 187, 187);
+  border-radius: 50%;
+  margin-left: 20px;
+  border: solid 3px white;
+}
+
+.indicator-recording{
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: red;
+  border-radius: 50%;
+  margin-left: 20px;
+  border: solid 3px white;
+}
 
 
 
@@ -599,7 +625,7 @@ form{
   border-style: none;
   background-color: var(--body-bg);
   box-shadow: 0 0 0 15px rgba(255, 7, 7,0);
-  animation: pulse-red 2s infinite;
+  animation: pulse-white 2s infinite;
   outline: none;
 
 }
