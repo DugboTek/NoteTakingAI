@@ -636,7 +636,6 @@ form{
 
 @media only screen and (max-width: 1020px) {
 
-  .con
 
   .left-rail-area{
     margin-left: 0px;
@@ -652,6 +651,12 @@ form{
     padding-right: 5px;
   }
 
+  .text-area{
+    min-width: 90vw !important; 
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
   .micContainer {
     width: 100%;
     border-radius: 0;
@@ -660,7 +665,8 @@ form{
   }
 
   .text-input{
-    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+
   }
 
   .tab-container {
@@ -726,6 +732,11 @@ form{
   .record-button, .record-button-recording {
     height: 6em;
     width: 6em;
+  }
+
+  .record-icon {
+    height: 3em;
+    width: 3em;
   }
 }
 
