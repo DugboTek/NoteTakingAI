@@ -3,7 +3,8 @@
 
 :root{
   --body-bg: #f5f8ff;
-  --box-bg: #;
+  --box-bg: #f5f8ff;
+  --box-bg-dark: #efefef;
   --input-bg: #f5f8ff;
   --text-color: #2f2d2f;
   --text-second-color: #eb5e28;
@@ -165,6 +166,21 @@ button:active {
   border-radius: 20px;
   box-shadow: var(--box-shadow);
 }
+
+.boxdefault-padded{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+  font-size:14px;
+  line-height: 1.1;
+  position: relative;
+  background-color: var(--box-bg);
+  padding:30px;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+}
+
+
 .content-box{
   display:grid;
   flex: 1 1;
@@ -175,13 +191,29 @@ button:active {
   grid-template-columns: 1fr .2fr;
   grid-template-rows: auto 1fr;
   margin: 15px;
-  background-color: var(--box-bg);
+  background-color: var(--box-bg-dark);
   padding:0.75rem;
   border-radius: 20px;
   box-shadow: var(--box-shadow);
-  max-width: 1500px;
 }
 
+
+.app-header{
+  display: flex;
+
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--body-bg);
+}
+
+.app-header h1{
+  font-size: 3.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  color: var(--text-second-color);
+}
 
 
 .topology-mini{
@@ -199,6 +231,7 @@ button:active {
 
 .right-rail-area{
   grid-area: right-rail;
+  justify-content: center;
 }
 
 .flex{
@@ -215,13 +248,16 @@ button:active {
 
 .header-area{
 	grid-area: header;
+
 }
 
   .primaryTextColor {
     color: var(--text-second-color);
 }
 
-h1{
+.text-area-title{
+  font-weight: 600;
+  font-style: bold;
   color: var(--text-second-color);  
 }
 
@@ -312,10 +348,28 @@ li{
 }
 
 .input-container{
+  margin-top: 50px;
   display:flex;
 	position: relative;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.tab-subject {
+  display: flex;
   align-items: center;
+  justify-content: center;
+  background-color: var(--text-second-color);
+  height: 100%;
+  width: 20%;
+  padding: 0 20px;
+  padding-top: 5px;
+  width: 200px;
+  border-top-left-radius: 5px;  
+  border-top-right-radius: 5px;
+  font-style: bold;
+  color:white;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .label{
@@ -325,22 +379,24 @@ li{
   transition: all 0.2s;
   padding: 0 2px;
   z-index: 1;
-  color: black;
+  color: white;
 
 }
 
 .text-input{
-  margin-top: 50px;
+  margin-top: -1px;
   padding: 0.8rem;
-  margin-left: 20px;
   margin-right: 20px;
   width: 100%;
   height: 100%;
-  border: 2px solid var(--text-second-color);
-  background-color: var(--input-bg);
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  border-width: 5px;
+  border-style: solid;
+  background-color: var(--body-bg);
+  border-color: var(--text-second-color);
   font-size: 18px;
-  outline: none;
   transition: all .3s;
   color: black;
 }
@@ -348,11 +404,14 @@ li{
 .label::before{
   content: "";
   height: 5px;
-  background-color: var(--box-bg);
+  background-color: var(--text-second-color);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   position: absolute;
   left: 0;
   top: 10px;
   width: 100%;
+  height: 100%;
   z-index: -1;
 }
 
@@ -361,21 +420,30 @@ form{
 }
 
 .text-input:focus{
-  border: 2px solid #ee6c4d;
+  border-style: solid;
+  border-width: 5px;
+  border-style: solid;
+  background-color: var(--body-bg);
+  border-color: var(--text-second-color);
 }
 
 .text-input + .label,
 .filled{
   top: 30px;
-  color: #ee6c4d;
+  color: black;
   font-size: 15px;
   font-weight: 600;
 }
 
 .text-input::placeholder{
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px;
+  font-weight: 600;
   opacity: 1;
   transition: all .3s;
+  font-weight: bold;
+  color:black;
+  
 }
 
 .text-input:focus::placeholder{
@@ -388,28 +456,146 @@ form{
   padding: 0.1em 0.4em;
   vertical-align: sub;
 }
+
 .record-button {
   height: 8em;
   width: 8em;
   border-radius: 50%;
-  border-color: var(--text-second-color);
+  border-style: none;
   background-color: var(--body-bg);
+  outline: none;
+  box-shadow: 0 0 0 0 rgba(221, 236, 250, 0.667) ;
+  animation: pulse-white 2s infinite;
+  
 }
+.micContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  background-color: var(--text-second-color);
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  position: relative;
+}
+
+.tab-container {
+  margin-top: -1px;
+  position: relative;
+  bottom: 0;
+  right: 0;
+  height: 40px;
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--text-second-color);
+  height: 100%;
+  width: 45%;
+  padding: 0 20px;
+  width: 200px;
+  border-bottom-left-radius: 20px;  
+  border-bottom-right-radius: 20px;
+  color:white;
+  cursor: pointer;
+}
+
+
+
+.tab-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--text-second-color);
+  height: 100%;
+  width: 45%;
+  padding: 0 20px;
+  border-bottom-left-radius: 20px;  
+  border-bottom-right-radius: 20px;
+  color:white;
+  cursor: pointer;
+  position: relative;
+}
+
+.tab-upload::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1;
+  border-bottom-left-radius: 20px;  
+  border-bottom-right-radius: 20px;
+}
+
+.tab-upload::after {
+  content: "Coming soon";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #555;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.tab-upload:hover::after {
+  opacity: 1;
+}
+
+
+.tab span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tab-upload span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+
+
+.instructions{
+  margin-top: 20px;
+}
+
 
 .record-button-recording {
   height: 8em;
   width: 8em;
+  max-width: 100%;
   border-radius: 50%;
-  border-color: var(--text-second-color);
+  border-style: none;
   background-color: var(--body-bg);
-  box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+  box-shadow: 0 0 0 0 rgb(255, 7, 7);
   animation: pulse-red 2s infinite;
+  outline: none;
+
 }
 
 @keyframes pulse-red {
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+    box-shadow: 0 0 0 0 rgba(255, 29, 29, 0.7);
   }
   
   70% {
@@ -423,6 +609,22 @@ form{
   }
 }
 
+@keyframes pulse-white {
+  0% {
+    box-shadow: 0 0 0 0 rgba(221, 236, 250, 0.667);
+  }
+  
+  70% {
+   
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+  
+  100% {
+   
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}
+
 @media only screen and (max-width: 490px) {
   .box-body {
     flex-direction: column;
@@ -432,13 +634,58 @@ form{
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1020px) {
+
+  .con
+
+  .left-rail-area{
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .box-body{
+    padding-top: 10px;
+    padding-left: 5px;
+  }
   body {
     padding-top: 50px;
     padding-left: 5px;
     padding-right: 5px;
   }
 
+  .micContainer {
+    width: 100%;
+    border-radius: 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  .text-input{
+    border-top-right-radius: 0px;
+  }
+
+  .tab-container {
+    width: 100%;
+  }
+
+  .tab {
+    width: 50%;
+  }
+
+  .tab-upload {
+    width: 45%;
+  }
+
+  .tab-upload span {
+    font-size: 12px;
+  }
+  .tab span {
+    font-size: 12px;
+  }
+
+
+  .tab-upload::after {
+    font-size: 12px;
+  }
 
   .content-box {
     grid-template-areas:
@@ -449,6 +696,10 @@ form{
     grid-template-rows: auto auto 1fr;
     gap: 0;
     padding: 0.5rem;
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
   }
 
   .header {
@@ -460,7 +711,11 @@ form{
     padding: 5px;
   }
 
-  .boxdefault, .content-box, .box--upload {
+  .boxdefault-padded{
+    padding: 20px;
+  }
+
+  .boxdefault, .box--upload {
     margin: 5px;
   }
 

@@ -57,8 +57,8 @@ const DropFileInput = (props) => {
         onDrop={onDrop}
       >
         <div className='drop-file-input__label'>
-          <img src={uploadImg} alt='upload' />
-          <p>Drag & Drop your file here.</p>
+          {/* <img src={uploadImg} alt='upload' /> */}
+          {/* <p>Drag & Drop your file here.</p> */}
         </div>
         <input type='file' accept='audio/*' onChange={handleFile} />
       </div>

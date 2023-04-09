@@ -190,29 +190,45 @@ const audioProcessor = {
 
 	return(
 		<div className="box--upload">
+			<div className="micContainer">
 			<div className ="microphone-box">
 				<button className={`record-button${recording ? '-recording' : ''}`} onClick={toggleAudioRecording}>
 				<img src={recordIcon} className="record-icon" alt= "recording button"/>
 				</button>
 			</div>
-			<h2 className="header">
-				Get Summerized Lectures With AI
-			</h2>
+			<div className="instructions">
+				<b>Press the button</b>
+				<br/>
+				to start note taking with Scribb
+			</div>
+				
+			</div>
+			<div class="tab-container">
+					<div class="tab">
+						<span>Record Audio</span>
+					</div>
+					<div class="tab-upload">
+						<span>Upload</span>
+					</div>
+			</div>
 
 			{
-			<DropFileInput setFormData={setFormData}/>
-				//setFormData={setFormData}
-				//onFileChange={handleFile}
+			// <DropFileInput setFormData={setFormData}/>
+			// 	//setFormData={setFormData}
+			// 	//onFileChange={handleFile}
 
 
 			}
+
 			<form> 
 				<div class = "input-container">
-					<input type="text" onChange ={(e) => setUserSubject(e.target.value)} id="subject" name="subject" placeholder="Enter The Class Subject" required class = "text-input"/>
-					<label for="subject" class = "label">Subject</label>
+					<div class="tab-subject">
+						<span>Subject</span>
+					</div>
+					<input type="text" onChange ={(e) => setUserSubject(e.target.value)} id="subject" name="subject" placeholder="Enter class subject" required class = "text-input"/>
 				</div>
 			
-			<button type = "button" className ="ant-btn padded marginTop" onClick={sendAudio}>Generate Notes</button>
+			{/* <button type = "button" className ="ant-btn padded marginTop" onClick={sendAudio}>Generate Notes</button> */}
 			</form>
 		</div>
 	)

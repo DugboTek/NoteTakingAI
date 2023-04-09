@@ -23,7 +23,7 @@ const TextAreaBox = (props) => {
 			<div className ="boxdefault results-card">
 				<div className = "box-body">
 					<div className="text-area">
-						<h1 className="text-area-title">Your Notes</h1>
+						<div className="text-area-title">Your Notes</div>
 						<div className="loader">
 						</div>	
 						
