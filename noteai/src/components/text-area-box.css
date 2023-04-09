@@ -25,10 +25,34 @@
 	flex-direction: column;
 	overflow-y: scroll;
 	overflow-x: visible;
-	margin:auto;
-	word-wrap:break-word;
-	min-width:50vw;
-	min-height: 90vh;
+	margin: auto;
+	word-wrap: break-word;
+	width: 50vw;
+	height: 90vh; 
+	-webkit-overflow-scrolling: touch;
+
+  }
+
+  /* For WebKit-based browsers (Chrome, Safari, etc.) */
+  *::-webkit-scrollbar,
+  *::-webkit-scrollbar-thumb {
+	width: 28px;
+	min-height: 80px;
+	border-radius: 13px;
+	background-clip: padding-box;
+	border: 10px solid transparent;
+	color: var(--text-second-color);
+  }
+  
+  *::-webkit-scrollbar-thumb {        
+	box-shadow: inset 0 0 0 10px;
+  }
+  
+  
+  /* For Firefox */
+  .text-area {
+	scrollbar-width: thin; /* Adjust the width of the scrollbar */
+	scrollbar-color: var(--text-second-color) transparent; /* Adjust the color of the scrollbar thumb and track */
   }
 
   .text-area div{
@@ -56,7 +80,10 @@
 	display: flex;
 	flex: 1 1;
 	flex-direction: column;
+	padding-right: 0;
 }
+
+
 
 .result-card box-body{
 	display: flex;
@@ -89,10 +116,19 @@
   }
 
   @media (max-width: 450px) {
-  
 	.text-area div {
 	  font-size: 1rem; /* Adjust the font size for smaller screens */
 	  line-height: 1.1rem;
 	}
-  }
   
+	.text-area {
+	  max-height: 100%;
+	  flex: none; 
+	}
+  
+	
+	.boxarea {
+	  height: auto;
+	  min-height: 50vh;
+	}
+  }

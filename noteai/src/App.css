@@ -4,7 +4,7 @@
 :root{
   --body-bg: #f5f8ff;
   --box-bg: #f5f8ff;
-  --box-bg-dark: #efefef;
+  --box-bg-dark: #F3F3F3;
   --input-bg: #f5f8ff;
   --text-color: #2f2d2f;
   --text-second-color: #eb5e28;
@@ -37,7 +37,7 @@ body {
 
   display: flex;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 20px;
 
   height: 100vh;
 
@@ -572,7 +572,7 @@ form{
 
 
 .tab span {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -580,6 +580,8 @@ form{
   font-size: 14px;
   font-weight: 600;
 }
+
+.indicator
 
 
 
@@ -596,7 +598,7 @@ form{
   border-radius: 50%;
   border-style: none;
   background-color: var(--body-bg);
-  box-shadow: 0 0 0 0 rgb(255, 7, 7);
+  box-shadow: 0 0 0 15px rgba(255, 7, 7,0);
   animation: pulse-red 2s infinite;
   outline: none;
 
@@ -605,7 +607,7 @@ form{
 @keyframes pulse-red {
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(255, 29, 29, 0.7);
+    box-shadow: 0 0 0 15px rgba(255, 29, 29, 0.7);
   }
   
   70% {
@@ -695,7 +697,7 @@ form{
     font-size: 12px;
   }
   .tab span {
-    font-size: 12px;
+    font-size: 15px;
   }
 
 
