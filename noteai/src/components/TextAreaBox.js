@@ -12,52 +12,42 @@ const fillerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Don
 const initialText = 'test'
 	//const [textVals, setTextVals] = useState('');
 const TextAreaBox = (props) => {
-
-	const{text} = props;
-	//setTextVals(textVals+text);
-	console.log("TextArea")
-	//
-	console.log(text);
-	return(
-		<div className="flex flex-column flex-1">
-			<div className ="boxdefault results-card">
-				<div className = "box-body">
-					<div className="text-area">
-						<div className="text-area-title">Your Notes</div>
-						<div className="loader">
-						</div>	
-						
-							<div className = "output-format" id="outputDiv">
-							{
-								props.loading ?
-								
-								<ScaleLoader
-								size={50}
-								color={"#cd5f44"}
-								loading={props.loading}
-								/>
-
-								:
-							
-								<ReactMarkdown 
-									source={text}
-									escapeHtml={false} // allows rendering of HTML tags
-									skipHtml={false}   // allows rendering of HTML tags
-									linkTarget="_blank" // opens links in a new tab
-								>
-									{
-									text
-									}
-								</ReactMarkdown>
-							}	
-							</div>
-						
-					</div>
-				</div>
+	const { text, loading } = props;
+  
+	return (
+	  <div className="flex flex-column flex-1">
+		<div className="boxdefault results-card">
+		  <div className="box-body">
+			<div className="text-area">
+			  <div className="text-area-title">Your Notes</div>
+			  <div className="output-format" id="outputDiv">
+				<ReactMarkdown
+				  source={text}
+				  escapeHtml={false}
+				  skipHtml={false}
+				  linkTarget="_blank"
+				>
+				  {text}
+				</ReactMarkdown>
+  
+				{loading && (
+				  <div class="book">
+					<div class="book__pg-shadow"></div>
+					<div class="book__pg"></div>
+					<div class="book__pg book__pg--2"></div>
+					<div class="book__pg book__pg--3"></div>
+					<div class="book__pg book__pg--4"></div>
+					<div class="book__pg book__pg--5"></div>
+			  	</div>
+				)}
+			  </div>
 			</div>
+		  </div>
 		</div>
-	)
-};
+	  </div>
+	);
+  };
+  
 
 //write random filler text
 

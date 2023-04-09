@@ -22,6 +22,8 @@ const UploadFileBox = (props) => {
   const [userSubject, setUserSubject] = useState("");
   const [file, setFile] = useState(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
+  const [shouldProcessAudio, setShouldProcessAudio] = useState(true);
+
   const trackLengthInMS = 1000; // Length of audio chunk in miliseconds
   const maxNumOfSecs = 1000; // Number of mili seconds we support per recording (1 second)
 
@@ -38,27 +40,24 @@ const UploadFileBox = (props) => {
 
   const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
-  const maxFileSize = 24 * 1024 * 1024; // 25 MB
+  const maxFileSize = 1 * 1024 * 1024; // 25 MB
 let mp3Encoder;
 
-const webVoiceProcessor = new WebVoiceProcessor({
-	context: "browsers",
-	frameLength: 512,
-	sampleRate: 16000
-  });
-
 const processAudioData = async (inputFrame) => {
+	// If audio processing is disabled, return early
+	if (!shouldProcessAudio) return;
+  
 	const mp3Data = mp3Encoder.encodeBuffer(inputFrame);
 	if (mp3Data.length > 0) {
-		setRecordedChunks(prevChunks => [...prevChunks, mp3Data]);
+	  setRecordedChunks(prevChunks => [...prevChunks, mp3Data]);
 	}
 	let filesize = recordedChunks.length * Uint8Array.BYTES_PER_ELEMENT;
 	if(filesize %5 == 0){
-		console.log(filesize);
+	  //console.log(filesize);
 	}
   
 	if (recordedChunks.length * Uint8Array.BYTES_PER_ELEMENT > maxFileSize) {
-		console.log("Max file size reached. Stopping recording.");
+	  console.log("Max file size reached. Stopping recording.");
 	  // Stop the recording
 	  await WebVoiceProcessor.unsubscribe(audioProcessor);
 	  // Send the audio and reset recordedChunks
@@ -80,36 +79,46 @@ const audioProcessor = {
   };
 
   const toggleAudioRecording = async () => {
-    if (recording) {
-      // Stop the recording and get the recorded audio Blob as an MP3 file
-      try {
-		console.log('ubsubscribeing...');
-        await WebVoiceProcessor.unsubscribe(audioProcessor);
+	if (recording) {
+	  // Stop the recording and get the recorded audio Blob as an MP3 file
+	  try {
+		console.log('unsubscribing...');
+		setShouldProcessAudio(false); 
+		await WebVoiceProcessor.unsubscribe(audioProcessor);
+		await WebVoiceProcessor.reset();
 		console.log(recordedChunks);
-        sendAudio();
-      } catch (error) {
-        console.error("An error occurred while stopping the recorder: ", error);
-      } finally {
-        setRecording(false);
+		await sendAudio();
+		
+	  } catch (error) {
+		console.error("An error occurred while stopping the recorder: ", error);
+	  } finally {
+		setRecording(false);
 		console.log('stopping recording...');
-      }
-    } else {
-      setRecording(true);
-
-      // Initialize the MP3 encoder
-      mp3Encoder = new lamejs.Mp3Encoder(1, 16000, 128);
-
-      // Start recording using the Web Voice Processor
-      try {
-        console.log("Recording Audio...");
-        await WebVoiceProcessor.subscribe(audioProcessor);
-      } catch (error) {
-        console.error("An error occurred while starting the recorder: ", error);
-        setRecording(false);
-      }
-    }
-  };
+	  }
+	} else {
+	  setRecording(true);
+	  setShouldProcessAudio(true); 
   
+	  // Initialize the MP3 encoder
+	  mp3Encoder = new lamejs.Mp3Encoder(1, 16000, 128);
+  
+	  // Create a new WebVoiceProcessor instance
+	  const webVoiceProcessor = new WebVoiceProcessor({
+		context: "browsers",
+		frameLength: 512,
+		sampleRate: 16000
+	  });
+  
+	  // Start recording using the Web Voice Processor
+	  try {
+		console.log("Recording Audio...");
+		await WebVoiceProcessor.subscribe(audioProcessor);
+	  } catch (error) {
+		console.error("An error occurred while starting the recorder: ", error);
+		setRecording(false);
+	  }
+	}
+  };
 	const handleSubmit = async (inputText) => {
 		//gets the subject from the user
 		const resp = await fetch('https://scribb.ai:3001/noteDetails', {
@@ -181,8 +190,8 @@ const audioProcessor = {
 		} catch (error) {
 		  console.error(error);
 		} finally {
-		  setLoading(false);
-		  props.isLoading(false);
+		  // Reset the recordedChunks array
+		  setRecordedChunks([]);
 		}
 	  };
 	  
