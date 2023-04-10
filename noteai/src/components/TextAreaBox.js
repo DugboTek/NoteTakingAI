@@ -9,9 +9,12 @@ import './text-area-box.css';
 import TextWriteOut from './textWriteOut';
 
 const fillerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies lacinia, nisl nisl aliquet nisl, eget aliquet nis";
-
+const initialText = 'test'
+	//const [textVals, setTextVals] = useState('');
 const TextAreaBox = (props) => {
+
 	const{text} = props;
+	//setTextVals(textVals+text);
 	console.log("TextArea")
 	//
 	console.log(text);
