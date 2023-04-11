@@ -84,7 +84,7 @@ const getData = (textdata) => {
                     Scribb
                   </h4>
                   <span className="toplolgy-mini">
-                    Get Summerized Lectures With AI
+                    Get Summarized Lectures With AI
                   </span>
                 </div>
                 <div className ="primary-action-btn gradient-animated-box">
