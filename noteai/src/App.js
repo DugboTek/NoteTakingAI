@@ -88,9 +88,10 @@ const getData = (textdata) => {
                   </span>
                 </div>
                 <div className ="primary-action-btn gradient-animated-box">
-                  <button type="button" className="ant-btn">
-                      <span>Upgrade</span>
-                  </button>
+                <button type="button" className="ant-btn" onClick={() => window.location.href = "https://forms.gle/4FGfXcrkPmbyUL2V9"}>
+                  <span>Provide Feedback</span>
+                </button>
+
                 </div>
 
               </div>
