@@ -1,0 +1,21 @@
+{
+	"rewrites": [
+	  {
+		"source": "/alpha/:path*",
+		"destination": "/index.html"
+	  }
+	],
+	"headers": [
+	  {
+		"source": "**/*",
+		"headers": [
+		  {
+			"key": "Cache-Control",
+			"value": "no-cache"
+		  }
+		]
+	  }
+	],
+	"trailingSlash": true
+  }
+  
