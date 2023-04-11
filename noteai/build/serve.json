@@ -1,0 +1,10 @@
+{
+	"public": "./",
+	"rewrites": [
+	  {
+		"source": "/alpha/:path*",
+		"destination": "/index.html"
+	  }
+	]
+  }
+  
