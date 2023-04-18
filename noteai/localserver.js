@@ -10,8 +10,8 @@ const app = express();
 const port = 3001;
 
 
-
-
+const davinci = true;
+const gpt35 = false;
 
 //TODO: add Whisper API integration
 //whisper
@@ -55,17 +55,39 @@ app.post('/', async (req, res) => {
 	// Send a response back to the client with the message property
 
 	//	{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details."},
-	const response = await openai.createChatCompletion({
-		model: "gpt-3.5-turbo",
-		messages: [
-			{role: "system","content": "You are a helpful note generating robot that generates notes on important topics or details given an audio transcription."},
-			{role: "user","content": "This is the class subject that the audio recording is about:" + `${subject}`+"use your prior knowlege on the topic to supplement the notes you generate."},
-			{role: "user", "content": "The next user input will be the transcription of an audio file. Please provide detailed notes on the audio file and the teachers important points or details. Create headers on important points in the transcript. You will return the output in markdown format, for the header use ## for the Header and ### for subheaders, bold and italisize words that are important in the transcript and provide bulleted-list. after every new line create an aditional new line character."},
-			{role: "user", "content": `${JSON.stringify(req.body)}`}
-				],
+	if(davinci=true) {
+		const subject = "your subject here";
+		const transcription = JSON.stringify(req.body);
+
+		const prompt = `You are a note generating robot that creates concise summaries from audio transcriptions using markdown and first-person perspective. Use prior knowledge on the topic to supplement the notes. The notes you generate are added to the bottom of previous notes so do not add any introduction or conclusion sections.
+
+		User: You will create notes in the style of ${subject}
+		User: Transcription: ${transcription}
+		Assistant: Please provide a markdown-formatted summary with headers (##), subheaders (###), bold/italics, and bulleted lists. Use concise language and first-person perspective. Remove unnecessary words and phrases. Separate lines with an additional newline character.`;
+
+		const response = await openai.createCompletion({
+		model: "text-davinci-003",
+		prompt: prompt,
 		max_tokens: 2500,
 		temperature: 0,
-	});
+		});
+
+	}
+	
+	// gpt3.5-turbo
+	if(gpt35 = true){
+		const response = await openai.createChatCompletion({
+			model: "gpt-3.5-turbo",
+				messages: [
+				{role: "system", "content": "You are a note generating robot that creates concise summaries from audio transcriptions using markdown and first-person perspective. Use prior knowledge on the topic to supplement the notes. the notes you generate are added to the bottom of previous notes so do not add any introduction or conclusion sections."},
+				{role: "user", "content": "You will create notes in the style of" + `${subject}`},
+				{role: "user", "content": "Transcription: " + `${JSON.stringify(req.body)}`},
+				{role: "assistant", "content": "Please provide a markdown-formatted summary with headers (##), subheaders (###), bold/italics, and bulleted lists. Use concise language and first-person perspective. Remove unnecessary words and phrases. Separate lines with an additional newline character."}
+				],
+				max_tokens: 2500,
+				temperature: 0,
+		});
+	}
 
 	console.log(response.data.choices[0].message.content);
 	console.log("app.post() called");
