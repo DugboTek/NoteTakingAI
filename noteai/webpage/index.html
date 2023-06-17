@@ -9,22 +9,39 @@
 </head>
 <body>
 	<div class="header">
-		<div class="logo">
-			<h1>Scribb</h1>
-		</div>
-		<div class="nav">
-			<ul>
-				<li><a href="#">Features</a></li>
-				<li><a href="#">Scribb Notes</a></li>
-				<li><a href="#">Pricing</a></li>
-				<li><a href="#">Academy</a></li>
-				<li><a href="#">Contact</a></li>
-			</ul>
-		</div>
-		<div class="div-block">
-			<a class="signin link w-button">Sign In</a>
-			<a class="button w-button">Get Started</a>
-		</div>
+		
+		<nav class="navbar">
+			<div class="navbar__logo" >
+				<div class="logo">
+					<h1>Scribb</h1>
+				</div>
+			  <a href="#home"></a>
+			</div>
+			  <div class="navbar__container">
+				  
+				  <div class="navbar__toggle" id="mobile-menu">
+					  <span class="bar"></span>
+					  <span class="bar"></span>
+					  <span class="bar"></span>
+				  </div>
+				  <ul class="navbar__menu">
+					  <li class="navbar__item">
+						  <a href="#home" class="navbar__links" id="home-page">Home</a>
+					  </li>
+					  <li class="navbar__item">
+						  <a href="./about" class="navbar__links" id="about-page">Academy</a>
+					  </li>
+					  <li class="navbar__item">
+						<a href="#home" class="navbar__links" id="about-page">Notes</a>
+					</li>
+					<div class="div-block">
+						<a class="signin link w-button" href="https://scribb.ai/alpha">Sign In</a>
+						<a class="button w-button mobilebtn" href="https://scribb.ai/alpha">Get Started</a>
+					</div>
+				  </ul>
+			  </div>
+		  </nav>
+		
 	</div>
 	<section class="section1">
 		<div class="hero">
@@ -138,5 +155,6 @@
 		});
 	  </script>
 	  <script src="./js/emailHandler.js"></script>
+	  <script src="./js/NavBar.js"></script>
 </body>
 </html>
