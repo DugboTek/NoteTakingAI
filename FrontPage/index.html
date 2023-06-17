@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="frontpage.css">
+</head>
+<body>
+	<div class="header">
+		<div class="logo">
+			<h1>Scribb</h1>
+		</div>
+		<div class="nav">
+			<ul>
+				<li><a href="#">Features</a></li>
+				<li><a href="#">Scribb Notes</a></li>
+				<li><a href="#">Pricing</a></li>
+				<li><a href="#">Academy</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</div>
+		<div class="div-block">
+			<a class="signin link w-button">Sign In</a>
+			<a class="button w-button">Get Started</a>
+		</div>
+	</div>
+	<section class="section1">
+		<div class="hero">
+			<h1>Best AI for Creating</h1>
+			<h1 class="typed-words clipped">
+				<span class="typed-text"></span><span class="cursor">|</span>
+			  </h1>
+			  
+			  <script>
+				const words = ["Class Notes.", "Meeting Notes.", "Note Cards.", "Study Guides."];
+				const typeSpeed = 100; // Time delay between typing each letter
+				const deleteSpeed = 70; // Time delay between deleting each letter
+				const pauseTime = 1000; // Time to pause before typing the next word
+			  
+				let wordIndex = 0;
+				let letterIndex = 0;
+				let isDeleting = false;
+			  
+				function type() {
+				  const currentWord = words[wordIndex];
+				  const typedText = document.querySelector('.typed-text');
+				  const cursor = document.querySelector('.cursor');
+			  
+				  if (isDeleting) {
+					typedText.textContent = currentWord.substring(0, letterIndex - 1);
+					letterIndex--;
+				  } else {
+					typedText.textContent = currentWord.substring(0, letterIndex + 1);
+					letterIndex++;
+				  }
+			  
+				  if (isDeleting && letterIndex === 0) {
+					isDeleting = false;
+					wordIndex++;
+					if (wordIndex === words.length) {
+					  wordIndex = 0; // Reset to the first word
+					}
+					setTimeout(type, 600);
+				  } else if (!isDeleting && letterIndex === currentWord.length) {
+					isDeleting = true;
+					setTimeout(type, pauseTime);
+				  } else {
+					setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
+				  }
+				}
+			  
+				window.addEventListener('DOMContentLoaded', () => {
+				  setTimeout(type, pauseTime);
+				  setInterval(() => {
+					const cursor = document.querySelector('.cursor');
+					cursor.style.visibility = cursor.style.visibility === 'visible' ? 'hidden' : 'visible';
+				  }, 500);
+				});
+			  </script>
+			<p class="text">Create Detailed Class Notes During Your Lectures with AI<br>Pay attention durring class and learn 10X faster.</p>
+			<a href="" class="button-56 mar-24 w-button">
+				<svg class="star-icon" id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="400" viewBox="0, 0, 400, 400">
+					<g id="svgg">
+					  <path id="path0" d="M146.513 4.102 C 146.341 4.639,144.746 12.246,142.969 21.008 C 125.079 109.203,104.930 129.039,15.397 146.594 C 6.939 148.252,0.014 149.812,0.009 150.059 C 0.004 150.307,6.768 151.851,15.039 153.492 C 106.158 171.567,126.103 191.660,143.800 283.203 C 145.212 290.508,146.586 296.746,146.852 297.067 C 147.118 297.387,148.498 291.655,149.918 284.330 C 167.997 191.056,187.931 171.122,281.205 153.043 C 288.530 151.623,294.262 150.235,293.942 149.959 C 293.621 149.683,287.556 148.342,280.463 146.979 C 187.410 129.092,167.281 108.438,149.212 12.305 C 147.519 3.294,147.140 2.144,146.513 4.102 M306.057 210.547 C 305.788 211.406,304.815 215.977,303.894 220.703 C 293.033 276.423,279.359 290.043,223.438 300.838 C 211.224 303.195,211.099 303.414,220.817 305.410 C 280.290 317.625,292.626 329.416,303.479 384.420 C 306.619 400.332,306.152 400.397,309.714 383.545 C 321.082 329.761,332.886 317.957,386.670 306.589 C 403.522 303.027,403.457 303.494,387.545 300.354 C 336.128 290.209,321.244 276.565,311.312 230.469 C 307.126 211.042,306.565 208.918,306.057 210.547" stroke="none"  fill= fill-rule="evenodd"></path>
+					</g>
+				  </svg>
+				Start for Free
+			</a>
+			<p class="text-2">No credit card required</p>
+		</div>
+	</section>
+	<section class = "secton-2">
+
+		<div class="product-demo">
+			<div class="signup-container">
+				<div class="signup-area">
+					<div class="signup-text">
+						<h1>Join our waitlist</h1>
+						<p>Sign up for free and start taking notes with our AI software.</p>
+					</div>
+					<div class="form-area">
+						<h1>Signup to join our waitlist</h1>
+						<div class="signup-form">
+							<input type="email" placeholder="Enter your e-mail">
+							<button class = "signupbtn ">
+								<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M10.5004 11.9998H5.00043M4.91577 12.2913L2.58085 19.266C2.39742 19.8139 2.3057 20.0879 2.37152 20.2566C2.42868 20.4031 2.55144 20.5142 2.70292 20.5565C2.87736 20.6052 3.14083 20.4866 3.66776 20.2495L20.3792 12.7293C20.8936 12.4979 21.1507 12.3822 21.2302 12.2214C21.2993 12.0817 21.2993 11.9179 21.2302 11.7782C21.1507 11.6174 20.8936 11.5017 20.3792 11.2703L3.66193 3.74751C3.13659 3.51111 2.87392 3.39291 2.69966 3.4414C2.54832 3.48351 2.42556 3.59429 2.36821 3.74054C2.30216 3.90893 2.3929 4.18231 2.57437 4.72906L4.91642 11.7853C4.94759 11.8792 4.96317 11.9262 4.96933 11.9742C4.97479 12.0168 4.97473 12.0599 4.96916 12.1025C4.96289 12.1506 4.94718 12.1975 4.91577 12.2913Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="democontainer">
+				<div class="texthead">
+				<h1>Utilize the Power of AI to Save Time </h1>
+				</div>
+
+			
+				<div class="product-demo-image">
+				<img src="/images/demo.jpeg" alt="Note Taking AI Screenshot">
+				</div>
+				</div>
+		    </div>		  
+	</section>
+	<script>
+		// JavaScript code
+		document.addEventListener("DOMContentLoaded", function() {
+		  var elements = document.getElementsByTagName("*");
+		  var colors = ["red", "blue", "green", "yellow", "lightblue", "purple"]; // Add more colors if desired
+	
+		  for (var i = 0; i < elements.length; i++) {
+			var randomColor = colors[Math.floor(Math.random() * colors.length)];
+			elements[i].style.borderColor = randomColor;
+		  }
+		});
+	  </script>
+</body>
+</html>

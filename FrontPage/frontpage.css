@@ -1,0 +1,470 @@
+/* frontpage.css */
+@font-face {
+	font-family: "Satoshi";
+	src: url(/fonts/Satoshi-Medium.ttf) format("truetype");
+  }
+  @font-face {
+	font-family: "Satoshi-light";
+	src: url(/fonts/Satoshi-light.ttf) format("truetype");
+  }
+  
+
+/*{
+	border: dashed 1px;
+  }/*
+  
+/* Global styles */
+
+* {
+	box-sizing: border-box;
+  }
+body {
+	min-height: 100%;
+	color: #333;
+	background-color: #fff;
+	margin: 0;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+  }
+  
+  /* Header styles */
+  .header {
+	background-color: #111827;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+
+  .typed-words.clipped {
+	padding-bottom: 10px;
+    background-image: linear-gradient(90deg, rgba(232,24,217,1) 20%, rgba(160,18,255,1) 27%, rgba(95,120,255,1) 54%, rgba(43,234,255,1) 89%);
+  }
+.clipped {
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.texthead h1{
+		float: left;
+		color: black;
+		text-align: center;
+		letter-spacing: -2.4px;
+		font-size: 60px;
+		line-height: 84px;
+		font-family: "Satoshi";
+		margin:0;
+}
+
+
+
+.signup-area{
+	
+	border-radius: 20px;
+	padding: 50px;
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	flex-direction: row;
+	background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	width: 80vw;
+
+
+}
+
+.form-area{
+	display: flex;
+	flex-direction: column;
+	font-family: "Satoshi-light";
+	flex: 1 .5 1;
+
+}
+
+.signup-form{
+	background-color: #ffffff;
+	border-radius: 10px;
+	display:flex;
+	flex-direction: row;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	justify-content: left;
+	align-items: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 30vw;
+
+
+}
+
+.form-area h1{
+	width:400px;
+}
+
+.signupbtn{
+	text-decoration: none;
+	border: none;
+	font-family: "Satoshi-light";
+	margin-right: 10px;
+	height: 25px;
+    color: #fff;
+    text-align: center;
+    border-radius: 100px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    text-decoration: none;
+    transition: all .2s;
+    display: flex;
+    position: static;
+	flex-direction: row;
+}
+
+input{
+	padding: 10px;
+	width: 30vw;
+	text-decoration: none;
+	border: none;
+	border-radius: 10px;
+}
+
+.signup-text{
+	font-family: "Satoshi";
+}
+
+.signup-text h1{
+	font-size: 40px;
+	margin-bottom: 20px;
+}
+
+.signup-container{
+	width: 100%;
+	background-color: #ffffff;
+	margin-top: 20px;
+	border-radius: 50px 50px 0px 0px;
+	padding: 30px 30px;
+	display: flex;
+	justify-content: center;
+
+}
+
+@media screen and (max-width: 1180px) {
+	.signup-area{
+		flex-direction: column;
+		width: max-content;
+	}
+	.signup-form{
+		justify-content: center;
+		align-items: center;
+	}
+  }
+
+
+.democontainer{
+	display:flex;
+	flex-direction: column;
+	justify-content:center;
+	align-items: center;
+	width: 100%;
+	background-color: #ffffff;
+	padding: 30px 30px;
+	
+}
+.product-demo {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #111827;
+	padding-top: 100px;
+  }
+  
+  .product-demo-image {
+	margin-top: 30px;
+	width: 80vw;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-demo-image img {
+	display: block;
+	width: 100%;
+	border-radius: 10px;
+  }
+  
+  
+  .logo h1 {
+	margin: 0;
+	font-size: 30px;
+	color:#ff672b;
+	margin-right: 50px;
+  }
+
+  .nav{
+	margin-right: auto;
+  }
+  
+  .nav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 20px;
+  }
+  
+  .nav ul li {
+	display: inline-block;
+	margin-right: 10px;
+  }
+  
+  .nav ul li a {
+	color: #fff;
+	text-decoration: none;
+  }
+  
+@media screen and (max-width: 991px){
+.button {
+    height: 32px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+}
+
+.div-block{
+    grid-column-gap: 20px;
+    grid-row-gap: 16px;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+    grid-auto-columns: 1fr;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    display: grid;
+}
+
+
+.w-button {
+    color: #fff;
+    line-height: inherit;
+    cursor: pointer;
+    border: 0;
+    border-radius: 0;
+    padding: 0px 15px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+
+.link {
+    background-color: transparent;
+	font-weight: 700;
+}
+
+.signin{
+	font-size: 15px;
+}
+
+
+
+.button {
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+}
+
+
+.star-icon {
+	width: 20px; /* Adjust the width as needed */
+	height: 20px; /* Adjust the height as needed */
+	margin-right: 10px; /* Adjust the spacing between the icon and text as needed */
+	vertical-align: middle; /* Align the icon vertically with the text */
+	fill:white;
+	margin-bottom: 5px;
+  }
+  
+  
+  /* Section 1 styles */
+  .section1 {
+	background-color: #111827;
+	padding: 40px;
+	padding-top: 15vh;
+	text-align: center;
+  }
+  .hero{
+	display: flex;
+	flex-direction: column;
+  }
+
+  .text{
+    text-align: center;
+	padding-bottom: 20px;
+  }
+
+  .text-2{
+	text-align: center;
+	color:#959595;
+	font-family: "satoshi-light";
+  }
+  
+  .hero h1 {
+	float: left;
+    color: #fff;
+    text-align: center;
+    letter-spacing: -2.4px;
+    font-size: 80px;
+    line-height: 84px;
+	color: #fff;
+	font-family: "Satoshi";
+	margin:0;
+  }
+  
+  .hero p.text {
+	margin: 20px 0 0;
+	line-height: 30px;
+	font-size: 20px;
+	color: #959595;
+  }
+
+  .mar-24{
+	margin: 24px 0 0;
+  }
+
+  #cursor{
+	color: #0072ef;
+  }
+
+  .button-56 {
+	
+    height: 56px;
+    min-width: 146px;
+    color: #fff;
+    text-align: center;
+    background-color: #705cf6;
+    border-radius: 100px;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 0;
+    padding: 0px 30px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    text-decoration: none;
+    transition: all .2s;
+    display: flex;
+    position: static;
+	flex-direction: row;
+
+}
+  
+  /* Responsive styles */
+  @media screen and (max-width: 767px) {
+	.hero h1 {
+	  font-size: 48px;
+	  line-height: 56px;
+	}
+  }
+  
+  @media screen and (max-width: 991px) {
+	.hero h1 {
+	  margin-bottom: 0;
+	  font-size: 60px;
+	  line-height: 70px;
+	}
+  }
+  
+  @media screen and (max-width: 767px) {
+	.h1-typed-words {
+	  float: left;
+	  color: #fff;
+	  text-align: center;
+	  letter-spacing: -2.4px;
+	  font-size: 80px;
+	  line-height: 84px;
+	}
+  }
+  
+
+  .writesonic {
+	color: #111827;
+	flex-direction: column;
+	align-items: center;
+	font-family: Satoshi, sans-serif;
+	font-size: 16px;
+	transition: all 0.2s;
+	position: relative;
+  }
+
+  /* Navbar styles */
+.navbar {
+	background-color: #111827;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.logo h1 {
+	margin: 0;
+	font-size: 30px;
+	color: #ff672b;
+	margin-right: 50px;
+}
+
+.nav {
+	margin-right: auto;
+}
+
+.nav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 20px;
+	display: flex;
+}
+
+.nav ul li {
+	margin-right: 10px;
+}
+
+.nav ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Responsive styles for navbar */
+@media screen and (max-width: 767px) {
+	.navbar {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 10px;
+	}
+
+	.logo h1 {
+		margin-bottom: 10px;
+	}
+
+	.nav ul {
+		flex-direction: column;
+	}
+
+	.nav ul li {
+		margin-bottom: 10px;
+	}
+
+	.nav ul li:last-child {
+		margin-bottom: 0;
+	}
+}
