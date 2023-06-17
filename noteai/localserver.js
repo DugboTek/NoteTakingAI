@@ -1,5 +1,6 @@
 const OpenAI = require('openai');
 const {Configuration, OpenAIApi} = OpenAI;
+const fs = require('fs');
 //const response = await openai.listEngines();
 
 // a express server, which will handle api requests coming in and respond back witha json object, it will use body-parser aswel as cross
@@ -44,6 +45,45 @@ app.post('/noteDetails', async (req, res) => {
 	console.log("note Details:" + subject);
 	res.send({message: "note details received"});
 });
+
+app.post('/save-email', (req, res) => {
+	const email = req.body.email;
+  
+	// Validate the email address
+	if (validateEmail(email)) {
+	  // Save the email address to the CSV file
+	  saveEmailToFile(email);
+  
+	  // Send a success response
+	  res.status(200).send('Email saved successfully!');
+	  console.log("email saved successfully");
+	} else {
+	  // Send an error response
+	  res.status(400).send('Invalid email address!');
+	  console.log("invalid email address");
+	}
+  });
+  
+  function validateEmail(email) {
+	// Add your email validation logic here
+	// Example: You can use a regular expression to validate the email format
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return emailRegex.test(email);
+  }
+  
+  function saveEmailToFile(email) {
+	const csvFilePath = './emails.csv';
+  
+	// Format the email address as a CSV row
+	const csvRow = `"${email}"\n`;
+  
+	// Append the email address to the CSV file
+	fs.appendFile(csvFilePath, csvRow, (err) => {
+	  if (err) {
+		console.error('Error saving email to file:', err);
+	  }
+	});
+  }
 
 
 app.post('/', async (req, res) => {
