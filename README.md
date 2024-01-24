@@ -30,9 +30,9 @@
   <a href="#related">Related</a> •
   <a href="#license">License</a>
 </p>
-
-![screenshot]
-<a href="http://www.amitmerchant.com/electron-markdownify"><img src="/noteai/src/assets/images/demo.jpeg" alt="Markdownify" width="500"></a>
+<h1 align="center">
+<a align="center" href="http://www.amitmerchant.com/electron-markdownify"><img src="/noteai/src/assets/images/demo.jpeg" alt="Markdownify" width="800"></a>
+</h1>
 
 ## Key Features
 
