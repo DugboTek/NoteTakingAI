@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="/noteai/src/assets/images/scribblogo.svg" alt="Markdownify" width="500"></a>
+  <a href="https://www.scribb.ai"><img src="/noteai/src/assets/images/scribblogo.svg" alt="Markdownify" width="500"></a>
   <br>
   SCRIBB AI
   <br>
